@@ -24,5 +24,5 @@ export class Faculty extends Model {
     university: University;
 
     @HasMany(()=>Department)
-    depaetments: Department[];
+    departments: Department[];
 }
