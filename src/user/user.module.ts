@@ -4,7 +4,8 @@ import { UserService } from './services/user.service';
 import { usersProvider } from './providers/user.providers';
 import { SequelizeModule } from '../sequelize/sequelize.module';
 import { RoleService } from 'src/role/services/role.service';
-
+import { universityProvider } from 'src/university/providers/university.providers';
+import { UniversityModule } from 'src/university/university.module';
 @Module({
   imports: [SequelizeModule],
   controllers: [UserController],
@@ -12,6 +13,7 @@ import { RoleService } from 'src/role/services/role.service';
     UserService,
     RoleService,
     ...usersProvider,
+    ...universityProvider
   ],
 })
 

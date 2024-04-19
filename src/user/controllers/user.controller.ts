@@ -30,6 +30,19 @@ export class UserController {
     return await this.userService.create(createUser);
   }
 
+  @Post('createWorkgiver')
+  async createWorkgiver(@Body() createUser: CreateUserDto) {
+    const user = await this.userService.create(createUser);
+
+    const roleDto = new DefineUserRoleDto();
+    roleDto.role_id = (await this.roleService.getRoleByName('Работодатель')).id;
+    roleDto.user_id = user.id;
+
+    await this.defineRole(roleDto);
+
+    return await this.userService.findOne(user.id);
+  }
+
   @Post('defineRole')
   async defineRole(@Body() defineUserRoleDto: DefineUserRoleDto) {
     const result = await this.userService.defineUserRole(defineUserRoleDto);
