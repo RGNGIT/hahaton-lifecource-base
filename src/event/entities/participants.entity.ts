@@ -11,9 +11,9 @@ export class Participants extends Model<Participants> {
 
   @ForeignKey(() => User)
   @Column({ type: DataType.INTEGER })
-  user_id: string;
+  user_id: number;
 
   @ForeignKey(() => Event)
   @Column({ type: DataType.INTEGER })
-  event_id: string;
+  event_id: number;
 }
