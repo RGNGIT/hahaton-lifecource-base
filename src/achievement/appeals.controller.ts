@@ -7,7 +7,7 @@ import { GetCurrentUser } from 'src/common/decorators/get-current-user.decorator
 import { JwtGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @ApiTags('Заявка на достижения')
-@Controller()
+@Controller('appeal')
 export class AppealsController {
   constructor(private readonly appealsService: AppealsService) { }
 

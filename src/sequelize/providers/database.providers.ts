@@ -60,7 +60,7 @@ export const dbProviders = [
         UserVacancies
       ]);
       await sequelize.sync({ alter: true });
-
+      
       return sequelize;
     }
   }
