@@ -19,7 +19,7 @@ export class GroupController {
     return this.groupService.findAll();
   }
 
-   @Get('one/:id')
+  @Get('one/:id')
   findOne(@Param('id') id: string) {
     return this.groupService.findOne(+id);
   }
