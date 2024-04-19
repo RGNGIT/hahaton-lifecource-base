@@ -20,9 +20,9 @@ export class Faculty extends Model {
     @Column
     university_id: number;
   
-    @BelongsTo(() => University)
+    @BelongsTo(() => University, 'university_id')
     university: University;
 
     @HasMany(()=>Department)
-    depaetments: Department[];
+    departments: Department[];
 }
