@@ -42,7 +42,6 @@ export const dbProviders = [
 
       const sequelize = new Sequelize(sequelizeConfig);
       sequelize.addModels([User, Role, UserRoles,  Region, Locality, Topic,  Test, Question, Answer, HrAnswer, TestResult, Blob,  Appeal, University, Faculty, Department, Direction, Group, Students, Admins, Participants, Event, Achievement, Publication]);
-      //Portal, Department, 
       await sequelize.sync(/*{ alter: true }*/);
 
       return sequelize;
