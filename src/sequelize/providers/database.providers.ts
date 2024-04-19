@@ -23,6 +23,7 @@ import { Admins } from "src/university/entities/admins.entity";
 import { Participants } from "src/event/entities/participants.entity";
 import { Vacancy } from "src/vacancies/entities/vacancy.entity";
 import { UserVacancies } from "src/vacancies/entities/vacancy-user.entity";
+import { UserContent } from "src/user-content/entities/user-content-unit.entity";
 
 export const dbProviders = [
   {
@@ -57,7 +58,8 @@ export const dbProviders = [
         Achievement, 
         Publication, 
         Vacancy, 
-        UserVacancies
+        UserVacancies,
+        UserContent
       ]);
       await sequelize.sync({ alter: true });
       

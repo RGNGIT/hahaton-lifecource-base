@@ -21,6 +21,7 @@ export default {
   EVENT_MODULE: "events",
   PUBLICATION_MODULE: "publications",
   VACANCY_MODULE: "vacancies",
+  USER_CONTENT_MODULE: "userContents",
   // Юзвери
   NEW_USER: "new"
 };
