@@ -11,10 +11,9 @@ import { AuthGuard } from './guards/auth.guard';
 export class AuthController {
   constructor(private authService: AuthService) { }
 
-  // @UseGuards(LocalAuthGuard)
+  @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Request() req) {
-    console.log(req);
     return this.authService.login(req.user);
   }
 
