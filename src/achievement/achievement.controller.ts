@@ -33,4 +33,9 @@ export class AchievementController {
   remove(@Param('id') id: string) {
     return this.achievementService.remove(+id);
   }
+
+  @Get("/top")
+  async getTop10() {
+    return await this.achievementService.getTop10ByValue();
+  }
 }
