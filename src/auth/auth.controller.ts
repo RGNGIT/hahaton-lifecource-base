@@ -26,6 +26,6 @@ export class AuthController {
   @UseGuards(AuthGuard)
   @Post('profile')
   async getProfile(@Request() req) {
-    return this.authService.getMyInfo(req.user.id);
+    return this.authService.getMyInfo(req.user.sub.id);
   }
 }
