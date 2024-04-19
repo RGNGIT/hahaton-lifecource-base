@@ -20,8 +20,7 @@ export default class UpdateUserDto extends PartialType(CreateUserDto) {
   department_id?: number;
   @ApiPropertyOptional()
   position_id?: number;
-  @ApiPropertyOptional()
-  status?: EmployeeStatuses;
+
 
   avatar_salt: string;
 }

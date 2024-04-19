@@ -1,26 +1,39 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateGroupDto } from '../dto/create-group.dto';
 import { UpdateGroupDto } from '../dto/update-group.dto';
+import constants from 'src/common/constants';
+import { Group } from '../entities/group.entity';
 
 @Injectable()
 export class GroupService {
-  create(createGroupDto: CreateGroupDto) {
-    return 'This action adds a new group';
+  constructor(
+    @Inject(constants.GROUP_REPOSITORY)
+    private groupsRepository: typeof Group
+  ) { }
+
+  async create(createGroupDto: CreateGroupDto) {
+    const group = await this.groupsRepository.create({ ...createGroupDto });
+    return group;
   }
 
-  findAll() {
-    return `This action returns all group`;
+  async findAll() {
+    const groups = await this.groupsRepository.findAll({ include: { all: true } });
+    return groups;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} group`;
+  async findOne(id: number) {
+    const group = await this.groupsRepository.findOne({ where: { id }, include: { all: true } });
+    return group;
   }
 
-  update(id: number, updateGroupDto: UpdateGroupDto) {
-    return `This action updates a #${id} group`;
+
+  async update(id: number, updateGroupDto: UpdateGroupDto) {
+    const group = await this.groupsRepository.update({ ...updateGroupDto }, { where: { id } });
+    return group;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} group`;
+  async remove(id: number) {
+    const group = await this.groupsRepository.destroy({ where: { id } });
+    return group;
   }
 }
