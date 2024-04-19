@@ -24,8 +24,6 @@ import { PublicationModule } from 'src/publication/publication.module';
   imports: [
     UserModule,
     AuthModule,
-    PortalModule,
-    DepartmentsModule,
     LocalityModule,
     RoleModule,
     JwtModule,

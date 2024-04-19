@@ -8,4 +8,6 @@ export default class CreateUserDto {
   email: string;
   @ApiProperty()
   password: string;
+  locality_id: number;
+  group_id: number;
 }
