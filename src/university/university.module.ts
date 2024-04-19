@@ -10,10 +10,11 @@ import { GroupService } from './services/group.service';
 import { FacultyController } from './controllers/faculty.controller';
 import { DirectionController } from './controllers/direction.controller';
 import { GroupController } from './controllers/group.controller';
+import { DepartmentController } from './controllers/department.controller';
 
 @Module({
   imports: [SequelizeModule],
-  controllers: [UniversityController, FacultyController, DirectionController, DirectionController, GroupController],
+  controllers: [UniversityController, FacultyController, DepartmentController, DirectionController, GroupController],
   providers: [UniversityService, FacultyService, DepartmentService, DirectionService, GroupService, ...universityProvider],
 })
 export class UniversityModule {}

@@ -5,14 +5,8 @@ import { sequelizeConfig } from "../../config";
 // import { Portal } from "src/portal/entities/portal.entity";
 import { Role } from "src/role/entities/role.entity";
 import { UserRoles } from "src/user/entities/user-roles.entity";
-import { Topic } from "src/topic/entities/topic.entity";
 import { Blob } from "src/cdn/entities/blob.entity";
-import { Test } from "../../test/entities/test.entity";
-import { Question } from "src/test/entities/question.entity";
-import { Answer } from "src/test/entities/answer.entity";
 import { Appeal } from "src/achievement/entities/appeal.entity";
-import { HrAnswer } from "src/hr_answer/entities/hr_answer.entity";
-import { TestResult } from "src/test/entities/test-results.entity";
 import * as mysql from 'mysql2/promise';
 import { Locality } from "src/localities/entities/locality.entity";
 import { Region } from "src/localities/entities/region.entity";
@@ -41,8 +35,8 @@ export const dbProviders = [
       await connection.query(`CREATE DATABASE IF NOT EXISTS \`${sequelizeConfig.database}\`;`);
 
       const sequelize = new Sequelize(sequelizeConfig);
-      sequelize.addModels([User, Role, UserRoles,  Region, Locality, Topic,  Test, Question, Answer, HrAnswer, TestResult, Blob,  Appeal, University, Faculty, Department, Direction, Group, Students, Admins, Participants, Event, Achievement, Publication]);
-      await sequelize.sync(/*{ alter: true }*/);
+      sequelize.addModels([User, Role, UserRoles,  Region, Locality, Blob,  Appeal, University, Faculty, Department, Direction, Group, Students, Admins, Participants, Event, Achievement, Publication]);
+      await sequelize.sync({ alter: true });
 
       return sequelize;
     }

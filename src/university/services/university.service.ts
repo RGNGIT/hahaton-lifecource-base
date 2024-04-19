@@ -8,8 +8,19 @@ import { University } from '../entities/university.entity';
 export class UniversityService {
   constructor(
     @Inject(constants.UNIVERSITY_REPOSITORY)
-    private universitiesRepository: typeof University
+    private universitiesRepository: typeof University,
+    // private readonly usersService: UserService
   ) { }
+
+
+  // async create(createDepartmentsDto: CreateDepartmentDto): Promise<Department> {
+  //   const newdepartment = await this.departmentsRepository.create({ ...createDepartmentsDto });
+
+  //   const userRole = await this.usersService.defineUserRole({ user_id: createDepartmentsDto.hr_id, role_id: 3 }); //HR
+  //   const user = await this.usersService.update(createDepartmentsDto.hr_id, { department_id: newdepartment.id } as UpdateUserDto);
+
+  //   return newdepartment;
+  // }
 
   async create(createUniversityDto: CreateUniversityDto) {
     const university = await this.universitiesRepository.create({ ...createUniversityDto });

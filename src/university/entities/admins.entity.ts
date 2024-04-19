@@ -10,9 +10,9 @@ export class Admins extends Model<Admins> {
 
   @ForeignKey(() => User)
   @Column({ type: DataType.INTEGER })
-  user_id: string;
+  user_id: number;
 
   @ForeignKey(() => University)
   @Column({ type: DataType.INTEGER })
-  university_id: string;
+  university_id: number;
 }
