@@ -10,6 +10,7 @@ import DefineUserRoleDto from '../dto/define-user-role.dto';
 import { Department } from 'src/university/entities/department.entity';
 import { Portal } from 'src/portal/entities/portal.entity';
 import { Locality } from 'src/localities/entities/locality.entity';
+import { Group } from 'src/university/entities/group.entity';
 
 @Injectable()
 export class UserService {
@@ -26,7 +27,7 @@ export class UserService {
   }
 
   async findOne(id): Promise<User> {
-    const user = await this.usersRepository.findOne({ where: { id }, include: [{ model: Role }, { model: Locality }] });
+    const user = await this.usersRepository.findOne({ where: { id }, include: [{ model: Role }, { model: Locality }, { model: Group }] });
     return user;
   }
 
