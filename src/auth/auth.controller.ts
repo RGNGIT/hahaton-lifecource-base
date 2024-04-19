@@ -26,6 +26,9 @@ export class AuthController {
   @UseGuards(AuthGuard)
   @Post('profile')
   async getProfile(@Request() req) {
-    return this.authService.getMyInfo(req.user.sub.id);
+    const user = await this.authService.getMyInfo(req.user.sub.id);
+    delete user.password;
+
+    return user;
   }
 }
