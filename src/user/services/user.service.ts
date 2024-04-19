@@ -26,7 +26,7 @@ export class UserService {
   }
 
   async findOne(id): Promise<User> {
-    const user = await this.usersRepository.findOne({ where: { id }, include: [{ model: Role }, { model: Department }, { model: Locality }, { model: Portal }] });
+    const user = await this.usersRepository.findOne({ where: { id }, include: [{ model: Role }, { model: Locality }] });
     return user;
   }
 
