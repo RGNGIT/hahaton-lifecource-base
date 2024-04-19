@@ -20,6 +20,7 @@ export default {
   ACHIEVEMENT_MODULE: "achievements",
   EVENT_MODULE: "events",
   PUBLICATION_MODULE: "publications",
+  VACANCY_MODULE: "vacancies",
   // Юзвери
   NEW_USER: "new"
 };

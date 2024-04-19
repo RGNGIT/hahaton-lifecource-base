@@ -21,6 +21,8 @@ import { Achievement } from "src/achievement/entities/achievement.entity";
 import { Publication } from "src/publication/entities/publication.entity";
 import { Admins } from "src/university/entities/admins.entity";
 import { Participants } from "src/event/entities/participants.entity";
+import { Vacancy } from "src/vacancies/entities/vacancy.entity";
+import { UserVacancies } from "src/vacancies/entities/vacancy-user.entity";
 
 export const dbProviders = [
   {
@@ -35,7 +37,28 @@ export const dbProviders = [
       await connection.query(`CREATE DATABASE IF NOT EXISTS \`${sequelizeConfig.database}\`;`);
 
       const sequelize = new Sequelize(sequelizeConfig);
-      sequelize.addModels([User, Role, UserRoles,  Region, Locality, Blob,  Appeal, University, Faculty, Department, Direction, Group, Students, Admins, Participants, Event, Achievement, Publication]);
+      sequelize.addModels([
+        User, 
+        Role, 
+        UserRoles,  
+        Region, 
+        Locality, 
+        Blob,  
+        Appeal, 
+        University, 
+        Faculty, 
+        Department, 
+        Direction, 
+        Group, 
+        Students, 
+        Admins, 
+        Participants, 
+        Event, 
+        Achievement, 
+        Publication, 
+        Vacancy, 
+        UserVacancies
+      ]);
       await sequelize.sync({ alter: true });
 
       return sequelize;
