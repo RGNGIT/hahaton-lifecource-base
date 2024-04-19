@@ -15,6 +15,7 @@ import { AchievementModule } from 'src/achievement/achievement.module';
 import { EventModule } from 'src/event/event.module';
 import { PublicationModule } from 'src/publication/publication.module';
 import { VacancyModule } from 'src/vacancies/vacancy.module';
+import { UserContentModule } from 'src/user-content/user-content.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { VacancyModule } from 'src/vacancies/vacancy.module';
     EventModule,
     PublicationModule,
     VacancyModule,
+    UserContentModule,
     RouterModule.register([{
       path: path.API_REQUEST,
       children: [{
@@ -71,6 +73,10 @@ import { VacancyModule } from 'src/vacancies/vacancy.module';
       {
         path: path.VACANCY_MODULE,
         module: VacancyModule
+      },
+      {
+        path: path.USER_CONTENT_MODULE,
+        module: UserContentModule
       }
       ]
     },
