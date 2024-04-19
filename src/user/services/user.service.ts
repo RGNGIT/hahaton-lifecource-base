@@ -8,6 +8,7 @@ import { Role } from '../../role/entities/role.entity';
 import { UserRoles } from '../entities/user-roles.entity';
 import DefineUserRoleDto from '../dto/define-user-role.dto';
 import { Locality } from 'src/localities/entities/locality.entity';
+import { Group } from 'src/university/entities/group.entity';
 import { Students } from 'src/university/entities/students.entity';
 import { Region } from 'src/localities/entities/region.entity';
 
@@ -28,7 +29,7 @@ export class UserService {
   }
 
   async findOne(id): Promise<User> {
-    const user = await this.usersRepository.findOne({ where: { id }, include: [{ model: Role }, { model: Locality, include: [{ model: Region }]}] });
+    const user = await this.usersRepository.findOne({ where: { id }, include: [{ model: Role }, { model: Group }, { model: Locality, include: [{ model: Region }]}] });
     return user;
   }
 
