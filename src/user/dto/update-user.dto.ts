@@ -4,6 +4,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { EmployeeStatuses } from 'src/common/enums/employee_statuses.enum';
 
 export default class UpdateUserDto extends PartialType(CreateUserDto) {
+  id: number;
   @ApiPropertyOptional()
   first_name?: string;
   @ApiPropertyOptional()
@@ -20,7 +21,6 @@ export default class UpdateUserDto extends PartialType(CreateUserDto) {
   department_id?: number;
   @ApiPropertyOptional()
   position_id?: number;
-
-
+  @ApiPropertyOptional()
   avatar_salt: string;
 }
