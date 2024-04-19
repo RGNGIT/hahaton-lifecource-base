@@ -10,6 +10,7 @@ import { Event } from 'src/event/entities/event.entity';
 import { Admins } from 'src/university/entities/admins.entity';
 import { University } from 'src/university/entities/university.entity';
 import { Achievement } from 'src/achievement/entities/achievement.entity';
+import { Sex } from 'src/common/enums/sex.enum';
 
 @Table
 export class User extends Model {
@@ -27,6 +28,9 @@ export class User extends Model {
 
   @Column
   middle_name: string;
+
+  @Column
+  sex: Sex;
 
   @Column
   phone: string;
