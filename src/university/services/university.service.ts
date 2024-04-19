@@ -32,6 +32,24 @@ export class UniversityService {
     return universities;
   }
 
+  // async findAll(queryParams) {
+
+  //   const { page, pageSize, ...filters } = queryParams;
+  //   const offset = page * pageSize || 0;
+  //   const limit = pageSize || 10;
+
+  //   const where = {};
+  //   Object.keys(filters).forEach(key => {
+  //     where[key] = filters[key];
+  //   });
+
+  //   return this.universitiesRepository.findAndCountAll({
+  //     where,
+  //     limit,
+  //     offset,
+  //   });
+  // }
+
   async findOne(id: number) {
     const university = await this.universitiesRepository.findOne({ where: { id }, include: { all: true } });
     return university;

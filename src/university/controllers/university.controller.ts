@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseInterceptors } from '@nestjs/common';
 import { UniversityService } from '../services/university.service';
 import { CreateUniversityDto } from '../dto/create-university.dto';
 import { UpdateUniversityDto } from '../dto/update-university.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { University } from '../entities/university.entity';
+import { UseModel } from 'src/common/decorators/use-model.decorator';
+import { FindInterceptor } from 'src/common/filters/find.interceptor';
 
 @ApiTags('ВУЗы')
 @Controller('university')
@@ -14,8 +17,15 @@ export class UniversityController {
     return this.universityService.create(createUniversityDto);
   }
 
+  @Post('all')
+  @UseModel(University) 
+  @UseInterceptors(FindInterceptor)
+  filterData(@Body() FilterDto: any) {
+    // return this.universalFindService.findAll(University, FilterDto);
+  }
+
   @Get()
-  findAll() {
+  findAll(){
     return this.universityService.findAll();
   }
 
