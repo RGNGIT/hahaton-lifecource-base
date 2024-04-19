@@ -2,7 +2,6 @@ import { BelongsTo, Column, DataType, ForeignKey, HasMany, HasOne, Model, Table 
 import { Achievement } from "src/achievement/entities/achievement.entity";
 import { AppealStatus } from "src/common/enums/appeal_status.enum";
 import { Event } from "src/event/entities/event.entity";
-import { HrAnswer } from "src/hr_answer/entities/hr_answer.entity";
 import { User } from "src/user/entities/user.entity";
 
 
