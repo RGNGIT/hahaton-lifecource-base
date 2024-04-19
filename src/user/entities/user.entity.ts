@@ -11,6 +11,7 @@ import { Admins } from 'src/university/entities/admins.entity';
 import { University } from 'src/university/entities/university.entity';
 import { Achievement } from 'src/achievement/entities/achievement.entity';
 import { Sex } from 'src/common/enums/sex.enum';
+import { Comment } from 'src/publication/entities/comments.entity';
 
 @Table
 export class User extends Model {
@@ -71,6 +72,9 @@ export class User extends Model {
 
   @HasMany(() => Achievement, 'user_id')
   achievements: Achievement[];
+
+  @HasMany(() => Comment, 'user_id')
+  comments: Comment[];
 
 }
 
