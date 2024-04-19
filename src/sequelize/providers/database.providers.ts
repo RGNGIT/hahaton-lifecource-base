@@ -36,7 +36,7 @@ export const dbProviders = [
 
       const sequelize = new Sequelize(sequelizeConfig);
       sequelize.addModels([User, Role, UserRoles,  Region, Locality, Blob,  Appeal, University, Faculty, Department, Direction, Group, Students, Admins, Participants, Event, Achievement, Publication]);
-      await sequelize.sync({ alter: true });
+      await sequelize.sync(/*{ alter: true }*/);
 
       return sequelize;
     }
