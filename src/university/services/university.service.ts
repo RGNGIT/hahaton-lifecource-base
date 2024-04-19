@@ -3,12 +3,15 @@ import { CreateUniversityDto } from '../dto/create-university.dto';
 import { UpdateUniversityDto } from '../dto/update-university.dto';
 import constants from 'src/common/constants';
 import { University } from '../entities/university.entity';
+import { Admins } from '../entities/admins.entity';
 
 @Injectable()
 export class UniversityService {
   constructor(
     @Inject(constants.UNIVERSITY_REPOSITORY)
     private universitiesRepository: typeof University,
+    @Inject(constants.ADMINS_REPOSITORY)
+    private adminsRepository: typeof Admins
     // private readonly usersService: UserService
   ) { }
 
@@ -63,6 +66,11 @@ export class UniversityService {
   async remove(id: number) {
     const university = await this.universitiesRepository.destroy({ where: { id } });
     return university;
+  }
+
+  async addAdmin(id: number, admin_id: number) {
+    const admin = await this.adminsRepository.create({university_id: id, user_id: admin_id});
+    return admin;
   }
 
 }
