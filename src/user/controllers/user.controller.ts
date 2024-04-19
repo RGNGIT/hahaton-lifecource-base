@@ -46,7 +46,7 @@ export class UserController {
     const user = await this.userService.create(checkedConfirmUser.UserData);
 
     const roleDto = new DefineUserRoleDto();
-    roleDto.role_id = (await this.roleService.getRoleByName('portal_admin')).id;
+    roleDto.role_id = (await this.roleService.getRoleByName('Студент')).id;
     roleDto.user_id = user.id;
 
     await this.defineRole(roleDto);
