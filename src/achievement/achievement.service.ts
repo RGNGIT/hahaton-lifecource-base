@@ -3,6 +3,7 @@ import { CreateAchievementDto } from './dto/create-achievement.dto';
 import { UpdateAchievementDto } from './dto/update-achievement.dto';
 import { Achievement } from './entities/achievement.entity';
 import constants from 'src/common/constants';
+import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class AchievementService {
@@ -48,5 +49,10 @@ export class AchievementService {
   async remove(id: number) {
     const achievement = await this.achievementRepository.destroy({ where: { id } });
     return achievement;
+  }
+
+  async getTop10ByValue() {
+    const top = await this.achievementRepository.findAll({ include: [{ model: User }], limit: 10, order: [['value', 'DESC']] });
+    return top;
   }
 }

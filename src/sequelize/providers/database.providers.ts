@@ -23,6 +23,8 @@ import { Admins } from "src/university/entities/admins.entity";
 import { Participants } from "src/event/entities/participants.entity";
 import { Comment } from "src/publication/entities/comments.entity";
 import { Favorites } from "src/publication/entities/favorites.entity";
+import { Vacancy } from "src/vacancies/entities/vacancy.entity";
+import { UserVacancies } from "src/vacancies/entities/vacancy-user.entity";
 
 export const dbProviders = [
   {
@@ -37,9 +39,33 @@ export const dbProviders = [
       await connection.query(`CREATE DATABASE IF NOT EXISTS \`${sequelizeConfig.database}\`;`);
 
       const sequelize = new Sequelize(sequelizeConfig);
-      sequelize.addModels([User, Role, UserRoles,  Region, Locality, Blob,  Appeal, University, Faculty, Department, Direction, Group, Students, Admins, Participants, Event, Achievement, Publication, Comment, Favorites]);
-      await sequelize.sync();
 
+      sequelize.addModels([
+        User, 
+        Role, 
+        UserRoles,  
+        Region, 
+        Locality, 
+        Blob,  
+        Appeal, 
+        University, 
+        Faculty, 
+        Department, 
+        Direction, 
+        Group, 
+        Students, 
+        Admins, 
+        Participants, 
+        Event, 
+        Achievement, 
+        Publication, 
+        Vacancy, 
+        UserVacancies,
+        Comment, 
+        Favorites
+      ]);
+      await sequelize.sync({ alter: true });
+      
       return sequelize;
     }
   }
