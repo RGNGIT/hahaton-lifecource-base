@@ -12,7 +12,7 @@ export class Vacancy extends Model {
   header: string;
 
   // Дескрипшн
-  @Column({ type: DataType.STRING })
+  @Column({ type: DataType.TEXT })
   description: string;
 
   @BelongsToMany(() => User, () => UserVacancies)

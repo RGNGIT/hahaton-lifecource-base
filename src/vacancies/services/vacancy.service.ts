@@ -4,6 +4,7 @@ import { UpdateVacancyDto } from '../dto/update-vacancy.dto';
 import { Vacancy } from '../entities/vacancy.entity';
 import constants from 'src/common/constants';
 import { UserVacancies } from '../entities/vacancy-user.entity';
+import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class VacancyService {
@@ -46,7 +47,7 @@ export class VacancyService {
       return -1;
 
     const userVacancy = await this.userVacanciesRepository.create({ userId: subscriber_id, vacancyId: id });
-    
+
     return userVacancy;
   }
 }
