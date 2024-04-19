@@ -1,26 +1,40 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateDirectionDto } from '../dto/create-direction.dto';
 import { UpdateDirectionDto } from '../dto/update-direction.dto';
+import constants from 'src/common/constants';
+import { Direction } from '../entities/direction.entity';
 
 @Injectable()
 export class DirectionService {
-  create(createDirectionDto: CreateDirectionDto) {
-    return 'This action adds a new direction';
+
+  constructor(
+    @Inject(constants.DIRECTION_REPOSITORY)
+    private directionsRepository: typeof Direction
+  ) { }
+
+  async create(createDirectionDto: CreateDirectionDto) {
+    const direction = await this.directionsRepository.create({ ...createDirectionDto });
+    return direction;
   }
 
-  findAll() {
-    return `This action returns all direction`;
+  async findAll() {
+    const directions = await this.directionsRepository.findAll({ include: { all: true } });
+    return directions;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} direction`;
+  async findOne(id: number) {
+    const direction = await this.directionsRepository.findOne({ where: { id }, include: { all: true } });
+    return direction;
   }
 
-  update(id: number, updateDirectionDto: UpdateDirectionDto) {
-    return `This action updates a #${id} direction`;
+
+  async update(id: number, updateDirectionDto: UpdateDirectionDto) {
+    const direction = await this.directionsRepository.update({ ...updateDirectionDto }, { where: { id } });
+    return direction;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} direction`;
+  async remove(id: number) {
+    const direction = await this.directionsRepository.destroy({ where: { id } });
+    return direction;
   }
 }

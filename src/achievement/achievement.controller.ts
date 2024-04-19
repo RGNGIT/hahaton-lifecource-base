@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { AchievementService } from './achievement.service';
 import { CreateAchievementDto } from './dto/create-achievement.dto';
 import { UpdateAchievementDto } from './dto/update-achievement.dto';
@@ -15,8 +15,8 @@ export class AchievementController {
   }
 
   @Get()
-  findAll() {
-    return this.achievementService.findAll();
+  findAll(@Query() queryParams) {
+    return this.achievementService.findAll(queryParams);
   }
 
   @Get(':id')
