@@ -1,6 +1,7 @@
 import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
 import { Blob } from "src/cdn/entities/blob.entity";
 import { User } from "src/user/entities/user.entity";
+import { Comment } from "./comments.entity";
 
 @Table
 export class Publication extends Model{
@@ -12,6 +13,9 @@ export class Publication extends Model{
 
     @Column
     content: string;
+
+    @Column({type: DataType.JSON})
+    fileKeys: string[];
 
     @Column
     date: Date;
@@ -25,6 +29,11 @@ export class Publication extends Model{
     @Column({type: DataType.JSON})
     tags: string[];
 
+    @Column({defaultValue: 0})
+    likes: number; 
     // @HasMany(() => Blob)
     // blobs: Blob[];
+
+    @HasMany(()=>Comment)
+    comments: Comment[];
 }

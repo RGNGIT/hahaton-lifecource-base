@@ -21,6 +21,8 @@ import { Achievement } from "src/achievement/entities/achievement.entity";
 import { Publication } from "src/publication/entities/publication.entity";
 import { Admins } from "src/university/entities/admins.entity";
 import { Participants } from "src/event/entities/participants.entity";
+import { Comment } from "src/publication/entities/comments.entity";
+import { Favorites } from "src/publication/entities/favorites.entity";
 import { Vacancy } from "src/vacancies/entities/vacancy.entity";
 import { UserVacancies } from "src/vacancies/entities/vacancy-user.entity";
 
@@ -37,6 +39,7 @@ export const dbProviders = [
       await connection.query(`CREATE DATABASE IF NOT EXISTS \`${sequelizeConfig.database}\`;`);
 
       const sequelize = new Sequelize(sequelizeConfig);
+
       sequelize.addModels([
         User, 
         Role, 
@@ -57,7 +60,9 @@ export const dbProviders = [
         Achievement, 
         Publication, 
         Vacancy, 
-        UserVacancies
+        UserVacancies,
+        Comment, 
+        Favorites
       ]);
       await sequelize.sync({ alter: true });
       
