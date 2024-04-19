@@ -17,7 +17,7 @@ export class Locality extends Model {
   region_id: number;
 
   @BelongsTo(() => Region)
-  position: Region;
+  region: Region;
 
   @HasMany(() => University)
   universities: University[];
