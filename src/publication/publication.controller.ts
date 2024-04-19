@@ -19,7 +19,7 @@ export class PublicationController {
     return this.publicationService.findAll();
   }
 
-  @Get(':id')
+   @Get('one/:id')
   findOne(@Param('id') id: string) {
     return this.publicationService.findOne(+id);
   }

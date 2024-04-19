@@ -12,28 +12,28 @@ export class FacultyService {
   ) { }
 
   async create(createFacultyDto: CreateFacultyDto) {
-    const newRegion = await this.facultiesRepository.create({ ...createFacultyDto });
-    return newRegion;
+    const faculty = await this.facultiesRepository.create({ ...createFacultyDto });
+    return faculty;
   }
 
   async findAll() {
-    const regions = await this.facultiesRepository.findAll({ include: { all: true } });
-    return regions;
+    const faculties = await this.facultiesRepository.findAll({ include: { all: true } });
+    return faculties;
   }
 
   async findOne(id: number) {
-    const regions = await this.facultiesRepository.findOne({ where: { id }, include: { all: true } });
-    return regions;
+    const faculty = await this.facultiesRepository.findOne({ where: { id }, include: { all: true } });
+    return faculty;
   }
 
 
   async update(id: number, updateFacultyDto: UpdateFacultyDto) {
-    const region = await this.facultiesRepository.update({ ...updateFacultyDto }, { where: { id } });
-    return region;
+    const faculty = await this.facultiesRepository.update({ ...updateFacultyDto }, { where: { id } });
+    return faculty;
   }
 
   async remove(id: number) {
-    const region = await this.facultiesRepository.destroy({ where: { id } });
-    return region;
+    const faculty = await this.facultiesRepository.destroy({ where: { id } });
+    return faculty;
   }
 }

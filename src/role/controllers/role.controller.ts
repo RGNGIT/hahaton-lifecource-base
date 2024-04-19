@@ -19,7 +19,7 @@ export class RoleController {
     return this.roleService.findAll();
   }
 
-  @Get(':id')
+   @Get('one/:id')
   findOne(@Param('id') id: string) {
     return this.roleService.findOne(+id);
   }

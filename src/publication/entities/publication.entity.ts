@@ -22,8 +22,8 @@ export class Publication extends Model{
     @BelongsTo(() => User, 'author_id')
     author: User;
 
-    // @Column({type: DataType.ARRAY(DataType.JSON), allowNull: false})
-    // tags: Array<string>
+    @Column({type: DataType.JSON})
+    tags: string[];
 
     // @HasMany(() => Blob)
     // blobs: Blob[];

@@ -19,7 +19,7 @@ export class AchievementController {
     return this.achievementService.findAll(queryParams);
   }
 
-  @Get(':id')
+   @Get('one/:id')
   findOne(@Param('id') id: string) {
     return this.achievementService.findOne(+id);
   }

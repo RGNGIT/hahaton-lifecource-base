@@ -17,8 +17,8 @@ export class EventService {
   }
 
   async findAll() {
-    const event = await this.eventsRepository.findAll({ include: { all: true } });
-    return event;
+    const events = await this.eventsRepository.findAll({ include: { all: true } });
+    return events;
   }
 
   async findOne(id: number) {

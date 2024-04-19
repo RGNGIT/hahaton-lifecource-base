@@ -28,13 +28,13 @@ export class AppealsController {
     return this.appealsService.findUserAppeal(user.id);
   }
 
-  @UseGuards(JwtGuard)
-  @Get('myrequest')
-  findHRAppeal(@GetCurrentUser() user: any) {
-    return this.appealsService.findHRAppeal(user.id);
-  }
+  // @UseGuards(JwtGuard)
+  // @Get('myrequest')
+  // findHRAppeal(@GetCurrentUser() user: any) {
+  //   return this.appealsService.findHRAppeal(user.id);
+  // }
 
-  @Get(':id')
+   @Get('one/:id')
   findOne(@Param('id') id: string) {
     return this.appealsService.findOne(+id);
   }

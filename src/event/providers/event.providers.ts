@@ -1,5 +1,6 @@
 
 import constants from "../../common/constants";
+import { Event } from "../entities/event.entity";
 import { Participants } from "../entities/participants.entity";
 
 

@@ -1,26 +1,39 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreatePublicationDto } from './dto/create-publication.dto';
 import { UpdatePublicationDto } from './dto/update-publication.dto';
+import { Publication } from './entities/publication.entity';
+import constants from 'src/common/constants';
 
 @Injectable()
 export class PublicationService {
-  create(createPublicationDto: CreatePublicationDto) {
-    return 'This action adds a new publication';
+  constructor(
+    @Inject(constants.PUBLICATION_REPOSITORY)
+    private publicationsRepository: typeof Publication
+  ) { }
+
+  async create(createPublicationDto: CreatePublicationDto) {
+    const faculty = await this.publicationsRepository.create({ ...createPublicationDto });
+    return faculty;
   }
 
-  findAll() {
-    return `This action returns all publication`;
+  async findAll() {
+    const faculties = await this.publicationsRepository.findAll({ include: { all: true } });
+    return faculties;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} publication`;
+  async findOne(id: number) {
+    const faculty = await this.publicationsRepository.findOne({ where: { id }, include: { all: true } });
+    return faculty;
   }
 
-  update(id: number, updatePublicationDto: UpdatePublicationDto) {
-    return `This action updates a #${id} publication`;
+
+  async update(id: number, updatePublicationDto: UpdatePublicationDto) {
+    const faculty = await this.publicationsRepository.update({ ...updatePublicationDto }, { where: { id } });
+    return faculty;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} publication`;
+  async remove(id: number) {
+    const faculty = await this.publicationsRepository.destroy({ where: { id } });
+    return faculty;
   }
 }
