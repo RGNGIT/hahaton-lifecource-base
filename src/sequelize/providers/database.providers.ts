@@ -62,7 +62,7 @@ export const dbProviders = [
         Publication, 
         Vacancy, 
         UserVacancies,
-        UserContent
+        UserContent,
         Comment, 
         Favorites
       ]);
