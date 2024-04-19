@@ -29,7 +29,7 @@ export class UniversityController {
     return this.universityService.findAll();
   }
 
-   @Get('one/:id')
+  @Get('one/:id')
   findOne(@Param('id') id: string) {
     return this.universityService.findOne(+id);
   }

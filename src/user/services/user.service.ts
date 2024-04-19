@@ -70,4 +70,9 @@ export class UserService {
     const admin = await this.usersRepository.findOne({ where: { portal_id }, include: { model: Role, where: { name: "portal_admin" } } });
     return admin;
   }
+
+  async updateUsersAvatar(id: number, avatar_salt: string) {
+    const user = await this.usersRepository.update({ avatar_salt }, { where: { id } });
+    return user;
+  }
 }

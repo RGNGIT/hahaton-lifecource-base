@@ -20,7 +20,7 @@ export class DirectionController {
     return this.directionService.findAll();
   }
 
-   @Get('one/:id')
+  @Get('one/:id')
   findOne(@Param('id') id: string) {
     return this.directionService.findOne(+id);
   }

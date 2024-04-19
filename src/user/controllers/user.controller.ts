@@ -14,6 +14,15 @@ export class UserController {
     private userService: UserService,
     private roleService: RoleService
   ) { }
+  @Patch('updateAvatar')
+  async updateAvatar(@Body() updateUser: UpdateUserDto) {
+    const user = await this.userService.findOne(updateUser.id);
+
+    if (!user)
+      throw new HttpException('User not found', HttpStatus.INTERNAL_SERVER_ERROR);
+
+    await this.userService.updateUsersAvatar(user.id, updateUser.avatar_salt);
+  }
 
   @Post('createOnPortal')
   async postNewUser(@Body() createUser: CreateUserDto) {
