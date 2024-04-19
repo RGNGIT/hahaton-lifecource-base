@@ -23,7 +23,7 @@ export class EmailWorker {
     await this.transporter.sendMail({
       from: smtpConfig.auth.user,
       to: email,
-      subject: 'Подтверждение регистрации на ПрофТестиум',
+      subject: 'Подтверждение регистрации на LifeCourse',
       html: `<h1>Приветствую! Ваша ссылка на подтверждение </h1><br><a href="${link}">${link}</a>`,
     });
   }
