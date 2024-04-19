@@ -27,6 +27,7 @@ import { PublicationModule } from 'src/publication/publication.module';
     UniversityModule,
     AchievementModule,
     EventModule,
+    PublicationModule,
     RouterModule.register([{
       path: path.API_REQUEST,
       children: [{

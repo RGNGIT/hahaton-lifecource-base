@@ -9,7 +9,7 @@ export class Achievement extends Model {
     id: number;
 
     @Column
-    value: string;
+    value: number;
 
     @Column
     date: Date;

@@ -19,7 +19,7 @@ export class EventController {
     return this.eventService.findAll();
   }
 
-  @Get(':id')
+   @Get('one/:id')
   findOne(@Param('id') id: string) {
     return this.eventService.findOne(+id);
   }

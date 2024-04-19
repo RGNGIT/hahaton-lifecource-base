@@ -27,7 +27,7 @@ export class InvitationsController {
     return this.invitationsService.findMyInvites(user.id);
   }
 
-  @Get(':id')
+   @Get('one/:id')
   findOne(@Param('id') id: string) {
     return this.invitationsService.findOne(+id);
   }

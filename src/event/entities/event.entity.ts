@@ -29,7 +29,7 @@ export class Event extends Model {
     @Column
     university_id: number;
   
-    @BelongsTo(() => University)
+    @BelongsTo(() => University, 'university_id')
     university: University;
 
     @BelongsToMany(() => User, () => Participants)
