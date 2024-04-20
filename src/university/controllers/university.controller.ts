@@ -54,6 +54,11 @@ export class UniversityController {
     return this.universityService.getUniversityStudentsCount(id);
   }
 
+  @Get(':id/studentsAll')
+  getStudents(@Param('id') id: number) {
+    return this.universityService.getUniversityStudents(id);
+  }
+
   @Get(':id/content')
   getUniversityFiles(@Param('id') id: number) {
     return this.universityService.getUniversityFiles(id);
