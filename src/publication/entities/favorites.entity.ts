@@ -4,7 +4,7 @@ import { Publication } from "./publication.entity";
 
 
 
-@Table({ tableName: 'user_roles', createdAt: false, updatedAt: false })
+@Table({ tableName: 'favorites', createdAt: false, updatedAt: false })
 export class Favorites extends Model<Favorites> {
   @Column({ type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true })
   id: number;
