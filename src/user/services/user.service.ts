@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import CreateUserDto from '../dto/create-user.dto';
 import { User } from '../entities/user.entity';
 import constants from '../../common/constants';
@@ -14,6 +14,7 @@ import { Region } from 'src/localities/entities/region.entity';
 import { Direction } from 'src/university/entities/direction.entity';
 import { Department } from 'src/university/entities/department.entity';
 import { Faculty } from 'src/university/entities/faculty.entity';
+import { University } from 'src/university/entities/university.entity';
 
 @Injectable()
 export class UserService {
@@ -77,5 +78,13 @@ export class UserService {
   async updateUsersAvatar(id: number, avatar_salt: string) {
     const user = await this.usersRepository.update({ avatar_salt }, { where: { id } });
     return user;
+  }
+
+  async getUsersUniversity(user_id: number){
+    const user = await this.usersRepository.findByPk(user_id, {include: [{model: Group, include: [{model: Direction, include: [{model: Department, include: [{model: Faculty}]}]}] }]});
+    if(!user) throw new HttpException("Пользователь не найден", HttpStatus.BAD_REQUEST);
+    const universities_id = []; 
+    user.groups.forEach((x)=>universities_id.push(x.direction.department.faculty.university_id));
+    return universities_id;
   }
 }
