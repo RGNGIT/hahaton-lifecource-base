@@ -97,7 +97,7 @@ export class UniversityService {
 
   async getUniversityStudents(id: number) {
     const students = await (await dbProviders[0].useFactory()).query(
-      `SELECT g.id, g.last_name, g.first_name, g.middle_name, g.rating, b.fullname, b.id as group_id FROM students a, \`groups\` b, directions c, departments d, faculties e, universities f, users g 
+      `SELECT g.id, g.avatar_salt, g.last_name, g.first_name, g.middle_name, g.rating, b.fullname, b.id as group_id FROM students a, \`groups\` b, directions c, departments d, faculties e, universities f, users g 
       WHERE a.user_id = g.id AND a.group_id = b.id AND b.direction_id = c.id AND c.department_id = d.id AND d.faculty_id = e.id AND e.university_id = f.id AND f.id = ${id};`
     );
 
