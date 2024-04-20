@@ -9,4 +9,6 @@ export class CreateVacancyDto {
   author_id: number;
   @ApiProperty()
   locality_id: number;
+  @ApiProperty()
+  organization_id:number;
 }
