@@ -4,6 +4,8 @@ import { UpdateAchievementDto } from './dto/update-achievement.dto';
 import { Achievement } from './entities/achievement.entity';
 import constants from 'src/common/constants';
 import { User } from 'src/user/entities/user.entity';
+import { EventSection } from 'src/common/enums/event_section.enum';
+import { Event } from 'src/event/entities/event.entity';
 
 @Injectable()
 export class AchievementService {
@@ -56,8 +58,15 @@ export class AchievementService {
     return top;
   }
 
+  async getByType(section: EventSection){
+
+    const achievements = await this.achievementRepository.findAndCountAll({include: [ {model: Event, where: {section}}]});
+    return {data: achievements.rows, total: achievements.count};
+  }
+
   async getManyByUser(id: number) {
     const achievements = await this.achievementRepository.findAll({ where: { user_id: id } });
     return achievements;
+
   }
 }
