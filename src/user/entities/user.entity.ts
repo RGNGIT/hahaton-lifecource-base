@@ -12,6 +12,7 @@ import { University } from 'src/university/entities/university.entity';
 import { Achievement } from 'src/achievement/entities/achievement.entity';
 import { Sex } from 'src/common/enums/sex.enum';
 import { Comment } from 'src/publication/entities/comments.entity';
+import { Invitation } from 'src/invitations/entities/invitation.entity';
 
 @Table
 export class User extends Model {
@@ -75,6 +76,12 @@ export class User extends Model {
 
   @HasMany(() => Comment, 'user_id')
   comments: Comment[];
+
+  @HasMany(() => Invitation, 'recipient_id')
+  invites: Invitation[];
+
+  @HasMany(() => Invitation, 'admin_id')
+  adm_invites: Invitation[];
 
 }
 

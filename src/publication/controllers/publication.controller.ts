@@ -27,7 +27,7 @@ export class PublicationController {
   }
 
 
-  @Get('Favorites')
+  @Get('favorites')
   @UseGuards(JwtGuard)
   GetMyFavorites(@GetCurrentUser() user: any) {
     return this.publicationService.GetMyFavorites(user.id);

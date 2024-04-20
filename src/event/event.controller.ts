@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { EventService } from './event.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { JwtGuard } from 'src/auth/guards/jwt-auth.guard';
+import { GetCurrentUser } from 'src/common/decorators/get-current-user.decorator';
 
 @ApiTags('Мероприятия')
 @Controller('event')
@@ -19,7 +21,7 @@ export class EventController {
     return this.eventService.findAll();
   }
 
-   @Get('one/:id')
+  @Get('one/:id')
   findOne(@Param('id') id: string) {
     return this.eventService.findOne(+id);
   }
@@ -32,5 +34,11 @@ export class EventController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.eventService.remove(+id);
+  }
+
+  @Post(':id/participants')
+  @UseGuards(JwtGuard)
+  addParticipant(@Param('id') eventId: number, @GetCurrentUser() user: any) {
+    return this.eventService.addParticipant(eventId, user.id);
   }
 }
