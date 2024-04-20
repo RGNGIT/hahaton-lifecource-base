@@ -55,4 +55,9 @@ export class AchievementService {
     const top = await this.achievementRepository.findAll({ include: [{ model: User }], limit: 10, order: [['value', 'DESC']] });
     return top;
   }
+
+  async getManyByUser(id: number) {
+    const achievements = await this.achievementRepository.findAll({ where: { user_id: id } });
+    return achievements;
+  }
 }
