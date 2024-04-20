@@ -16,6 +16,7 @@ import { Department } from 'src/university/entities/department.entity';
 import { Faculty } from 'src/university/entities/faculty.entity';
 import { Op } from 'sequelize';
 import { University } from 'src/university/entities/university.entity';
+import { Achievement } from 'src/achievement/entities/achievement.entity';
 
 @Injectable()
 export class UserService {
@@ -106,4 +107,5 @@ export class UserService {
     user.groups.forEach((x)=>universities_id.push(x.direction.department.faculty.university_id));
     return universities_id;
   }
+
 }

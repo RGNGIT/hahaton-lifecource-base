@@ -83,5 +83,8 @@ export class User extends Model {
   @HasMany(() => Invitation, 'admin_id')
   adm_invites: Invitation[];
 
+  @Column({defaultValue: 0})
+  rating: number;
+
 }
 

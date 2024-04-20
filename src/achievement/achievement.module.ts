@@ -6,10 +6,11 @@ import { achievementProvider } from './providers/achievement.provider';
 import { AppealsService } from './appeals.service';
 import { AppealsController } from './appeals.controller';
 import { FindService } from 'src/common/filters/find.service';
+import { usersProvider } from 'src/user/providers/user.providers';
 
 @Module({
   imports: [SequelizeModule],
   controllers: [AchievementController, AppealsController],
-  providers: [AchievementService, AppealsService, FindService, ...achievementProvider],
+  providers: [AchievementService, AppealsService, FindService, ...achievementProvider, ...usersProvider],
 })
 export class AchievementModule {}
