@@ -50,4 +50,9 @@ export class VacancyService {
 
     return userVacancy;
   }
+
+  async findManyByAuthor(id: number) {
+    const vacancies = await this.vacanciesRepository.findAll({ where: { author_id: id }, include: { all: true } });
+    return vacancies;
+  }
 }

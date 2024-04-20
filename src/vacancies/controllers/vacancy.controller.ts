@@ -19,6 +19,11 @@ export class VacancyController {
     return this.vacancyService.findAll();
   }
 
+  @Get('/author/:id')
+  findAllByAuthor(@Param('id') id: number) {
+    return this.vacancyService.findManyByAuthor(id);
+  }
+
   @Get('one/:id')
   findOne(@Param('id') id: string) {
     return this.vacancyService.findOne(+id);
