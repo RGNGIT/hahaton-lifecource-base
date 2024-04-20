@@ -24,9 +24,7 @@ export class FindService {
     const offset = page * pageSize;
     const limit = pageSize;
     const include = this.buildInclude(includes);
-console.log(where);
-    
-console.log(include);
+
     return await model.findAndCountAll({
       where,
       order,
