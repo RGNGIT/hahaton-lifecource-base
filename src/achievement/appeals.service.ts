@@ -10,7 +10,7 @@ import { EventSection } from 'src/common/enums/event_section.enum';
 import { User } from 'src/user/entities/user.entity';
 import { University } from 'src/university/entities/university.entity';
 import { Group } from 'src/university/entities/group.entity';
-import { Students } from 'src/university/entities/students.entity';
+import sequelize from 'sequelize';
 
 @Injectable()
 export class AppealsService {
@@ -19,7 +19,10 @@ export class AppealsService {
     private appealsRepository: typeof Appeal,
 
     @Inject(constants.ACHIEVEMENTS_REPOSITORY)
-    private achievementRepository: typeof Achievement
+    private achievementRepository: typeof Achievement,
+
+    @Inject(constants.USERS_REPOSITORY)
+    private usersRepository: typeof User,
   ) { }
 
   async create(createAppealDto: CreateAppealDto, user_id: number): Promise<Appeal> {
@@ -74,6 +77,7 @@ export class AppealsService {
   }
 
   async accept(id: number){
+
     const appeal = await this.appealsRepository.findByPk(id, {
       include: [{
           model: User,
@@ -109,6 +113,8 @@ export class AppealsService {
 
     await this.appealsRepository.update({ status: AppealStatus.accepted }, { where: { id } });
 
+    await this.usersRepository.update({  rating: sequelize.literal('rating + ' + value) }, { where: { id: user.id } });
+
     return achievement;
   }
 
@@ -127,7 +133,7 @@ export class AppealsService {
 
 function calculateAchievementValue(user: User, event: Event): number {
 const values = [2];
-console.log(user)
+
   const usergroups = user.groups;
   if(usergroups == null) {
     throw new HttpException("Студент не состоит ни в одной группе",HttpStatus.BAD_REQUEST)
