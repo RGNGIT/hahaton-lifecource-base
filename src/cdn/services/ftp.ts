@@ -1,18 +1,22 @@
 import FtpClient from 'ftp';
-import constants from 'src/common/constants';
+import CONST from '../const/constants';
 import fs from 'fs';
-import { cdnConfig } from 'src/config';
+
+require('dotenv').config();
 
 class FtpService {
-  private config = cdnConfig;
-
+  private config = {
+    host: process.env.CDN_HOST,
+    port: process.env.CDN_PORT,
+    user: process.env.CDN_USERNAME,
+    password: process.env.CDN_PASSWORD
+  };
   private client = new FtpClient();
-
   public async upload(key) {
     return new Promise((resolve, reject) => {
       this.client.on('ready', () => {
-        this.client.put(`${constants.CDN_STORAGE}/${key}`, `files/hahaton/${key}`, (err) => {
-          if (err) reject(err);
+        this.client.put(`${CONST.STORAGE}/${key}`, `files/hahaton/${key}`, (err) => {
+          if(err) reject(err);
           resolve("OK");
           this.client.end();
         });
@@ -20,16 +24,15 @@ class FtpService {
       this.client.connect(this.config);
     });
   }
-
   public async read(key) {
     return new Promise((resolve, reject) => {
       this.client.on('ready', () => {
         this.client.get(`files/hahaton/${key}`, (err, stream) => {
-          if (err) reject(err);
+          if(err) reject(err);
           try {
             stream.once('close', () => { this.client.end(); resolve("OK"); });
-            stream.pipe(fs.createWriteStream(`${constants.CDN_STORAGE}/${key}`));
-          } catch (streamErr) {
+            stream.pipe(fs.createWriteStream(`${CONST.STORAGE}/${key}`));
+          } catch(streamErr) {
             reject(streamErr);
           }
         });

@@ -1,5 +1,4 @@
 import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
-import { Blob } from "src/cdn/entities/blob.entity";
 import { User } from "src/user/entities/user.entity";
 import { Comment } from "./comments.entity";
 import { University } from "src/university/entities/university.entity";
