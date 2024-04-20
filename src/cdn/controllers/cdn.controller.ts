@@ -3,6 +3,7 @@ import { CdnService } from '../services/cdn.service';
 import * as fs from 'fs';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger'
+import { Response } from 'express';
 
 @ApiTags('Файлы')
 @Controller()
@@ -20,12 +21,21 @@ export class CdnController {
   }
 
   @Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
-  async uploadFile(@UploadedFile() file: Express.Multer.File) {
+  // @UseInterceptors(FileInterceptor('file'))
+  // async uploadFile(@UploadedFile() file: Express.Multer.File) {
+  //   try {
+  //     return await this.cdnService.writeFile(file.buffer);
+  //   } catch (err) {
+  //     return err;
+  //   }
+  // }
+
+  async uploadFile(req, res: Response) {
     try {
-      return await this.cdnService.writeFile(file.buffer);
+      const { content } = req.files;
+      await this.cdnService.writeFile(content);
     } catch (err) {
-      return err;
+      res.json(err);
     }
   }
 
