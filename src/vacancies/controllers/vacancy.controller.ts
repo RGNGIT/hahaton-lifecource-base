@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, UseInterceptors } from '@nestjs/common';
 import { VacancyService } from '../services/vacancy.service';
 import { CreateVacancyDto } from '../dto/create-vacancy.dto';
 import { UpdateVacancyDto } from '../dto/update-vacancy.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { UseModel } from 'src/common/decorators/use-model.decorator';
+import { FindInterceptor } from 'src/common/filters/find.interceptor';
+import { Vacancy } from '../entities/vacancy.entity';
 
 @ApiTags('Вакансии')
 @Controller('vacancy')
@@ -18,6 +21,11 @@ export class VacancyController {
   findAll() {
     return this.vacancyService.findAll();
   }
+
+  @Post('all')
+  @UseModel(Vacancy) 
+  @UseInterceptors(FindInterceptor)
+  filterData(@Body() FilterDto: any) { }
 
   @Get('/author/:id')
   findAllByAuthor(@Param('id') id: number) {
