@@ -44,7 +44,7 @@ export class UniversityController {
     return this.universityService.remove(+id);
   }
 
-  @Patch('/university/:id')
+  @Patch('/university/admin/:id')
   addAdmin(@Param('id') id: number, @Body() admin_id: number) {
     return this.universityService.addAdmin(id, admin_id);
   }
