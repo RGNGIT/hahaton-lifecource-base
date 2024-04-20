@@ -1,6 +1,6 @@
 import FtpClient from 'ftp';
 import CONST from '../const/constants';
-import { cdnConfig } from 'src/config';
+import { cdnConfig } from '../../config';
 
 require('dotenv').config();
 const fs = require('fs');
