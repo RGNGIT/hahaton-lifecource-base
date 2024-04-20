@@ -25,6 +25,7 @@ import { Comment } from "src/publication/entities/comments.entity";
 import { Favorites } from "src/publication/entities/favorites.entity";
 import { Vacancy } from "src/vacancies/entities/vacancy.entity";
 import { UserVacancies } from "src/vacancies/entities/vacancy-user.entity";
+import { UserContent } from "src/user-content/entities/user-content-unit.entity";
 
 export const dbProviders = [
   {
@@ -61,6 +62,7 @@ export const dbProviders = [
         Publication, 
         Vacancy, 
         UserVacancies,
+        UserContent,
         Comment, 
         Favorites
       ]);

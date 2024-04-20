@@ -1,5 +1,6 @@
 
 import constants from "../../common/constants";
+import { Admins } from "../entities/admins.entity";
 import { Department } from "../entities/department.entity";
 import { Direction } from "../entities/direction.entity";
 import { Faculty } from "../entities/faculty.entity";
@@ -32,4 +33,8 @@ export const universityProvider = [
     provide: constants.STUDENTS_REPOSITORY,
     useValue: Students,
   },
+  {
+    provide: constants.ADMINS_REPOSITORY,
+    useValue: Admins
+  }
 ];
