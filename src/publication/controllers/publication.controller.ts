@@ -38,9 +38,14 @@ export class PublicationController {
   @UseInterceptors(FindInterceptor)
   filterAll(@Body() FilterDto:any){}
 
-   @Get('one/:id')
+  @Get('one/:id')
   findOne(@Param('id') id: string) {
     return this.publicationService.findOne(+id);
+  }
+
+  @Get('user/:id')
+  findByUser(@Param('id') id: number) {
+    return this.publicationService.getUsersPublications(id);
   }
 
   @Patch(':id')
