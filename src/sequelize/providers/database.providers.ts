@@ -5,7 +5,6 @@ import { sequelizeConfig } from "../../config";
 // import { Portal } from "src/portal/entities/portal.entity";
 import { Role } from "src/role/entities/role.entity";
 import { UserRoles } from "src/user/entities/user-roles.entity";
-import { Blob } from "src/cdn/entities/blob.entity";
 import { Appeal } from "src/achievement/entities/appeal.entity";
 import * as mysql from 'mysql2/promise';
 import { Locality } from "src/localities/entities/locality.entity";
@@ -48,7 +47,6 @@ export const dbProviders = [
         UserRoles,  
         Region, 
         Locality, 
-        Blob,  
         Appeal, 
         University, 
         Faculty, 

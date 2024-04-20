@@ -7,7 +7,6 @@ import path from '../common/path';
 import { RoleModule } from '../role/role.module';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from 'src/auth/auth.module';
-import { CdnModule } from 'src/cdn/cdn.module';
 import { InvitationsModule } from 'src/invitations/invitations.module';
 import { LocalityModule } from 'src/localities/locality.module';
 import { UniversityModule } from 'src/university/university.module';
@@ -24,7 +23,6 @@ import { UserContentModule } from 'src/user-content/user-content.module';
     LocalityModule,
     RoleModule,
     JwtModule,
-    CdnModule,
     InvitationsModule,
     UniversityModule,
     AchievementModule,
@@ -79,11 +77,7 @@ import { UserContentModule } from 'src/user-content/user-content.module';
         module: UserContentModule
       }
       ]
-    },
-    {
-      path: path.CDN_MODULE,
-      module: CdnModule
-    },
+    }
     ])
   ],
   controllers: [AppController],
