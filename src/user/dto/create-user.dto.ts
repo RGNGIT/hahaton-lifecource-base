@@ -13,4 +13,5 @@ export default class CreateUserDto {
   password: string;
   locality_id: number;
   group_id: number;
+  is_admin: boolean;
 }

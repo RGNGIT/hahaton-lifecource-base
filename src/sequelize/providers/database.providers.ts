@@ -66,7 +66,7 @@ export const dbProviders = [
         Favorites,
         Invitation
       ]);
-      await sequelize.sync({ alter: true });
+      await sequelize.sync(/*{ alter: true }*/);
       
       return sequelize;
     }
