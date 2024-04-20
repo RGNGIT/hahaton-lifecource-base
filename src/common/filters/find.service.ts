@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Model, ModelCtor } from 'sequelize-typescript';
-import { Op } from 'sequelize';
+import { Includeable, Op } from 'sequelize';
 import * as _ from 'lodash';
+import { FilterFieldsDto, IncludeCriteriaDto } from './filter.dto';
 
 @Injectable()
 export class FindService {
@@ -13,9 +14,29 @@ export class FindService {
       fields,
       page = 0,
       pageSize = 10,
-      sort = []
+      sort = [],
+      includes = [],
     } = queryParams;
 
+    const where = this.buildWhere(fields);
+    
+    const order = sort.map(s => [s.field, s.order.toUpperCase()]); // Подготовка параметров сортировки
+    const offset = page * pageSize;
+    const limit = pageSize;
+    const include = this.buildInclude(includes);
+console.log(where);
+    
+console.log(include);
+    return await model.findAndCountAll({
+      where,
+      order,
+      offset,
+      limit,
+      include
+    });
+  }
+
+  buildWhere(fields: FilterFieldsDto): any {
     const where = {};
     _.forOwn(fields, (criteria, field) => {
       const { operator, value } = criteria;
@@ -30,18 +51,13 @@ export class FindService {
         // Добавьте дополнительные операции по мере необходимости
       }
     });
-    const order = sort.map(s => [s.field, s.order.toUpperCase()]); // Подготовка параметров сортировки
-    const offset = page * pageSize;
-    const limit = pageSize;
+    return where;
+  }
 
-    
-
-    return await model.findAndCountAll({
-      where,
-      order,
-      offset,
-      limit,
-      include: {all: true}
-    });
+  buildInclude(includes: IncludeCriteriaDto[]): Includeable[] {
+    return includes.map(include => ({
+      association: include.association,
+      where: this.buildWhere(include.fields)
+    }));  
   }
 }
