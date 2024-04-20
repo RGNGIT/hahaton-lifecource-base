@@ -1,4 +1,5 @@
 import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
+import { University } from "src/university/entities/university.entity";
 import { User } from "src/user/entities/user.entity";
 
 @Table
@@ -15,4 +16,11 @@ export class UserContent extends Model {
 
   @BelongsTo(() => User)
   author: User;
+
+  @ForeignKey(() => University)
+  @Column
+  university_id: number;
+
+  @BelongsTo(() => University)
+  university: University;
 }
