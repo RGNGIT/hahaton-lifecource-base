@@ -59,7 +59,7 @@ export class PublicationService {
       await this.publicationsRepository.update({likes: sequelize.literal('likes - 1') }, { where: { id: publication_id } });
       return favorites;
     }
-      
+
   }
 
   async GetMyFavorites(user_id: number){
