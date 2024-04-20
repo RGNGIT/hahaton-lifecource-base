@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request, UseInterceptors, Query } from '@nestjs/common';
 import { AppealsService } from './appeals.service';
 import { CreateAppealDto } from './dto/create-appeal.dto';
 import { UpdateAppealDto } from './dto/update-appeal.dto';
@@ -68,5 +68,5 @@ export class AppealsController {
     return this.appealsService.decline(+id);
   }
   
-  
+
 }

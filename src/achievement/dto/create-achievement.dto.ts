@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 
 export class CreateAchievementDto {
     @ApiProperty()
-    value: string;
+    value: number;
     @ApiProperty()
     date: Date;
     @ApiProperty()

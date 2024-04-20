@@ -6,6 +6,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { UseModel } from 'src/common/decorators/use-model.decorator';
 import { Achievement } from './entities/achievement.entity';
 import { FindInterceptor } from 'src/common/filters/find.interceptor';
+import { EventSection } from 'src/common/enums/event_section.enum';
 
 @ApiTags('Достижения')
 @Controller('achievement')
@@ -45,5 +46,11 @@ export class AchievementController {
   @Get("/top")
   async getTop10() {
     return await this.achievementService.getTop10ByValue();
+  }
+
+  @Get('/section')
+  getByType(@Query("section") section: EventSection){
+     return this.achievementService.getByType(section);
+
   }
 }

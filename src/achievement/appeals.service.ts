@@ -77,47 +77,38 @@ export class AppealsService {
           include: [{ model: University }] // Загрузка данных факультета события
       }]
     
-  });
-  if (!appeal) throw new Error('Заявка не найдена');
+    });
+    if (!appeal) throw new Error('Заявка не найдена');
 
-  const user = appeal.applicant;
-  const event = appeal.event;
+    const user = appeal.applicant;
+    const event = appeal.event;
 
-  const value = calculateAchievementValue(user, event);
+    const value = calculateAchievementValue(user, event);
 
-  let achievement = await Achievement.findOne({
-    where: { appeal_id: id },
-    
-  });
-  if (achievement) {
-    achievement.value = value;
-  } else {
-    achievement = await Achievement.create({
+    let achievement = await Achievement.findOne({
+      where: { appeal_id: id },     
+    });
+    if (achievement) {
+      achievement.value = value;
+    } else {
+      achievement = await Achievement.create({
         value,
         date: new Date(),
         user_id: user.id,
         appeal_id: appeal.id,
         event_id: event.id
-    });
-}
-appeal.status = AppealStatus.accepted;
-await appeal.save();
-return achievement;
-    //  await this.appealsRepository.update({ status: AppealStatus.accepted }, { where: { id } });
-    //  const appeal = await this.appealsRepository.findOne({ where: { id }, include: {model: Event }});
-    // var value = 5;
-    // //  switch(appeal.event.section){
-    // //   case EventSection.art:
-        
-    // //  }
-    //  const achievement = await this.achievementRepository.create({value: 1, date: Date.now(), user_id: appeal.applicant_id, event_id: appeal.event_id });
-    // return achievement;
+      });
+  }
+    appeal.status = AppealStatus.accepted;
+    await appeal.save();
+    return achievement;
   }
 
   async decline(id: number){
     const appeal = await this.appealsRepository.update({ status: AppealStatus.declined }, { where: { id } });
     return "Заявка отклонена"
   }
+
 }
 
 
