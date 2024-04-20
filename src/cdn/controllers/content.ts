@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import FileService from "../services/file";
-import fs from "fs";
+
+const fs = require('fs');
 
 class ContentController {
   async getFile(req: Request, res: Response): Promise<void> {

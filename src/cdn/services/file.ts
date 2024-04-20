@@ -1,9 +1,10 @@
-import fs from "fs";
 import Hash from "./encrypt";
 import Misc from "./misc";
 import FtpService from "../services/ftp";
 import CONST from "../const/constants";
 import MiscMain from "../misc";
+
+const fs = require('fs');
 
 class FileService {
   constructor() {
