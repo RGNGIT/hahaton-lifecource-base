@@ -1,6 +1,7 @@
 import { Table, Column, Model, BelongsToMany, DataType, ForeignKey, BelongsTo, HasMany } from 'sequelize-typescript';
 import { User } from 'src/user/entities/user.entity';
 import { UserVacancies } from './vacancy-user.entity';
+import { Locality } from 'src/localities/entities/locality.entity';
 
 @Table
 export class Vacancy extends Model {
@@ -24,5 +25,12 @@ export class Vacancy extends Model {
 
   @BelongsTo(() => User)
   author: User;
+
+  @ForeignKey(() => Locality)
+  @Column
+  locality_id: number;
+  
+  @BelongsTo(() => Locality)
+  locality: Locality;
 }
 
