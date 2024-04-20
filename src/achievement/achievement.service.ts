@@ -6,6 +6,7 @@ import constants from 'src/common/constants';
 import { User } from 'src/user/entities/user.entity';
 import { EventSection } from 'src/common/enums/event_section.enum';
 import { Event } from 'src/event/entities/event.entity';
+import sequelize from 'sequelize';
 
 @Injectable()
 export class AchievementService {
@@ -68,5 +69,21 @@ export class AchievementService {
     const achievements = await this.achievementRepository.findAll({ where: { user_id: id } });
     return achievements;
 
+  }
+
+
+  async getUsersRating(){
+    return this.achievementRepository.findAll({
+      attributes: [
+        'user_id',
+        [sequelize.fn('SUM', sequelize.col('value')), 'totalPoints']
+      ],
+      group: ['user_id'],
+      order: [[sequelize.fn('SUM', sequelize.col('value')), 'DESC']],
+      limit: 10,
+      include: [{
+        model: User
+      }]
+    });
   }
 }

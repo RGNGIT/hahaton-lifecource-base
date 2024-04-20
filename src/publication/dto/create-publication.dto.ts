@@ -6,6 +6,8 @@ export class CreatePublicationDto {
     @ApiProperty()
     content: string;
     @ApiProperty()
+    section: string;
+    @ApiProperty()
     date: Date;
     @ApiProperty()
     author_id: number;

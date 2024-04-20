@@ -2,6 +2,7 @@ import { Table, Column, Model, BelongsToMany, DataType, ForeignKey, BelongsTo, H
 import { User } from 'src/user/entities/user.entity';
 import { UserVacancies } from './vacancy-user.entity';
 import { Locality } from 'src/localities/entities/locality.entity';
+import { Organization } from './organization.entity';
 
 @Table
 export class Vacancy extends Model {
@@ -32,5 +33,12 @@ export class Vacancy extends Model {
   
   @BelongsTo(() => Locality)
   locality: Locality;
+
+  @ForeignKey(() => Organization)
+  @Column
+  organization_id: number;
+  
+  @BelongsTo(() => Organization)
+  organization: Organization;
 }
 

@@ -14,6 +14,9 @@ export class Publication extends Model{
     @Column
     content: string;
 
+    @Column
+    section: string;
+
     @Column({type: DataType.JSON})
     file_keys: string[];
 

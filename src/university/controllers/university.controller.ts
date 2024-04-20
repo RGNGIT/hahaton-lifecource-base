@@ -10,7 +10,7 @@ import { FindInterceptor } from 'src/common/filters/find.interceptor';
 @ApiTags('ВУЗы')
 @Controller('university')
 export class UniversityController {
-  constructor(private readonly universityService: UniversityService) {}
+  constructor(private readonly universityService: UniversityService) { }
 
   @Post()
   create(@Body() createUniversityDto: CreateUniversityDto) {
@@ -18,14 +18,14 @@ export class UniversityController {
   }
 
   @Post('all')
-  @UseModel(University) 
+  @UseModel(University)
   @UseInterceptors(FindInterceptor)
   filterData(@Body() FilterDto: any) {
     // return this.universalFindService.findAll(University, FilterDto);
   }
 
   @Get()
-  findAll(){
+  findAll() {
     return this.universityService.findAll();
   }
 
@@ -44,8 +44,33 @@ export class UniversityController {
     return this.universityService.remove(+id);
   }
 
-  @Patch('/university/:id')
-  addAdmin(@Param('id') id: number, @Body() admin_id: number) {
-    return this.universityService.addAdmin(id, admin_id);
+  @Patch('/university/admin/:id')
+  addAdmin(@Param('id') id: number, @Body() shit: { admin_id }) {
+    return this.universityService.addAdmin(id, shit.admin_id);
+  }
+
+  @Get('/university/admin/:id')
+  findByAdmin(@Param('id') id: number) {
+    return this.universityService.findByAdmin(+id);
+  }
+
+  @Get(':id/students')
+  getStudentsCount(@Param('id') id: number) {
+    return this.universityService.getUniversityStudentsCount(id);
+  }
+
+  @Get(':id/studentsAll')
+  getStudents(@Param('id') id: number) {
+    return this.universityService.getUniversityStudents(id);
+  }
+
+  @Get(':id/content')
+  getUniversityFiles(@Param('id') id: number) {
+    return this.universityService.getUniversityFiles(id);
+  }
+
+  @Post(':id/content')
+  postUniversityFile(@Param('id') id: number, @Body() updateUniversityDto: UpdateUniversityDto) {
+    return this.universityService.addUniversityFile(id, updateUniversityDto.content_salt);
   }
 }
