@@ -17,8 +17,8 @@ class ContentController {
   async uploadFile(req, res: Response): Promise<void> {
     try {
       const { content } = req.files;
-      const fs = new FileService();
-      res.json(await fs.writeFile(content));
+      const fileService = new FileService();
+      res.json(await fileService.writeFile(content));
     } catch (err) {
       res.json(err);
     }
