@@ -48,4 +48,19 @@ export class UniversityController {
   addAdmin(@Param('id') id: number, @Body() admin_id: number) {
     return this.universityService.addAdmin(id, admin_id);
   }
+
+  @Get(':id/students')
+  getStudentsCount(@Param('id') id: number) {
+    return this.universityService.getUniversityStudentsCount(id);
+  }
+
+  @Get(':id/content')
+  getUniversityFiles(@Param('id') id: number) {
+    return this.universityService.getUniversityFiles(id);
+  }
+
+  @Post(':id/content')
+  postUniversityFile(@Param('id') id: number, @Body() updateUniversityDto: UpdateUniversityDto) {
+    return this.universityService.addUniversityFile(id, updateUniversityDto.content_salt);
+  }
 }

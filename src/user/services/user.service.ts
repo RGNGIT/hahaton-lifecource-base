@@ -14,7 +14,7 @@ import { Region } from 'src/localities/entities/region.entity';
 import { Direction } from 'src/university/entities/direction.entity';
 import { Department } from 'src/university/entities/department.entity';
 import { Faculty } from 'src/university/entities/faculty.entity';
-import { University } from 'src/university/entities/university.entity';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class UserService {
@@ -24,7 +24,7 @@ export class UserService {
     @Inject(constants.USER_ROLES_REPOSITORY)
     private userRolesRepository: typeof UserRoles,
     @Inject(constants.STUDENTS_REPOSITORY)
-    private studentRepository: typeof Students
+    private studentRepository: typeof Students,
   ) { }
 
   async defineUserRole(define: DefineUserRoleDto): Promise<UserRoles> {
@@ -53,6 +53,24 @@ export class UserService {
   async findAll(): Promise<User[]> {
     const users = await this.usersRepository.findAll({ include: { all: true } });
     return users;
+  }
+
+  async findByFio(fio: string): Promise<User[]> {
+    const names = fio.split(' ').filter(name => name.trim().length > 0);
+
+    const whereCondition = {
+      [Op.or]: names.map(name => ({
+        [Op.or]: [
+          { first_name: { [Op.like]: '%'+name+'%' } },
+          { last_name: { [Op.like]: '%'+name+'%' } },
+          { middle_name: { [Op.like]: '%'+name +'%'} }
+        ]
+      }))
+    };
+
+    return this.usersRepository.findAll({
+      where: whereCondition
+    });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User | [affectedCount: number]> {

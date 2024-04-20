@@ -4,10 +4,14 @@ import { UpdateUniversityDto } from '../dto/update-university.dto';
 import constants from 'src/common/constants';
 import { University } from '../entities/university.entity';
 import { Admins } from '../entities/admins.entity';
-import { Faculty } from '../entities/faculty.entity';
-import { Department } from '../entities/department.entity';
-import { Direction } from '../entities/direction.entity';
+import { Students } from '../entities/students.entity';
 import { Group } from '../entities/group.entity';
+import { Direction } from '../entities/direction.entity';
+import { Department } from '../entities/department.entity';
+import { Faculty } from '../entities/faculty.entity';
+import { User } from 'src/user/entities/user.entity';
+import { dbProviders } from 'src/sequelize/providers/database.providers';
+import { UserContent } from 'src/user-content/entities/user-content-unit.entity';
 
 @Injectable()
 export class UniversityService {
@@ -15,7 +19,11 @@ export class UniversityService {
     @Inject(constants.UNIVERSITY_REPOSITORY)
     private universitiesRepository: typeof University,
     @Inject(constants.ADMINS_REPOSITORY)
-    private adminsRepository: typeof Admins
+    private adminsRepository: typeof Admins,
+    @Inject(constants.USERS_REPOSITORY)
+    private usersRepository: typeof User,
+    @Inject(constants.USER_CONTENT_REPOSITORY)
+    private userContent: typeof UserContent
     // private readonly usersService: UserService
   ) { }
 
@@ -75,6 +83,26 @@ export class UniversityService {
   async addAdmin(id: number, admin_id: number) {
     const admin = await this.adminsRepository.create({ university_id: id, user_id: admin_id });
     return admin;
+  }
+
+  async getUniversityStudentsCount(id: number) {
+    const students = await (await dbProviders[0].useFactory()).query(
+      `SELECT COUNT(*) 
+      as n FROM students a, \`groups\` b, directions c, departments d, faculties e, universities f 
+      WHERE a.group_id = b.id AND b.direction_id = c.id AND c.department_id = d.id AND d.faculty_id = e.id AND e.university_id = f.id AND f.id = ${id};`
+    );
+
+    return students[0][0]['n'];
+  }
+
+  async addUniversityFile(id: number, content_salt) {
+    const content = await this.userContent.create({ university_id: id, content_salt });
+    return content;
+  }
+
+  async getUniversityFiles(id: number) {
+    const content = await this.userContent.findAll({ where: { university_id: id } });
+    return content;
   }
 
 }
