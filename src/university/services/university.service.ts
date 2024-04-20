@@ -4,6 +4,10 @@ import { UpdateUniversityDto } from '../dto/update-university.dto';
 import constants from 'src/common/constants';
 import { University } from '../entities/university.entity';
 import { Admins } from '../entities/admins.entity';
+import { Faculty } from '../entities/faculty.entity';
+import { Department } from '../entities/department.entity';
+import { Direction } from '../entities/direction.entity';
+import { Group } from '../entities/group.entity';
 
 @Injectable()
 export class UniversityService {
@@ -54,7 +58,7 @@ export class UniversityService {
   // }
 
   async findOne(id: number) {
-    const university = await this.universitiesRepository.findOne({ where: { id }, include: { all: true } });
+    const university = await this.universitiesRepository.findOne({ where: { id }, include: { model: Faculty, include: [{ model: Department, include: [{ model: Direction, include: [{ model: Group }] }] }] } });
     return university;
   }
 
@@ -69,7 +73,7 @@ export class UniversityService {
   }
 
   async addAdmin(id: number, admin_id: number) {
-    const admin = await this.adminsRepository.create({university_id: id, user_id: admin_id});
+    const admin = await this.adminsRepository.create({ university_id: id, user_id: admin_id });
     return admin;
   }
 
