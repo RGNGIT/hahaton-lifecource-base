@@ -27,6 +27,7 @@ import { UserVacancies } from "src/vacancies/entities/vacancy-user.entity";
 import { UserContent } from "src/user-content/entities/user-content-unit.entity";
 import { Invitation } from "src/invitations/entities/invitation.entity";
 import { Message } from "src/chat/entities/chat.entity";
+import { Friends } from "src/user/entities/friends.entity";
 
 export const dbProviders = [
   {
@@ -66,7 +67,8 @@ export const dbProviders = [
         Comment, 
         Favorites,
         Invitation,
-        Message
+        Message,
+        Friends
       ]);
       await sequelize.sync(/*{ alter: true }*/);
       

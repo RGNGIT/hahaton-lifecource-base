@@ -13,6 +13,7 @@ import { Achievement } from 'src/achievement/entities/achievement.entity';
 import { Sex } from 'src/common/enums/sex.enum';
 import { Comment } from 'src/publication/entities/comments.entity';
 import { Invitation } from 'src/invitations/entities/invitation.entity';
+import { Friends } from './friends.entity';
 
 @Table
 export class User extends Model {
@@ -86,5 +87,7 @@ export class User extends Model {
   @Column({defaultValue: 0})
   rating: number;
 
+  @BelongsToMany(() => User, () => Friends)
+  friends: User[]
 }
 

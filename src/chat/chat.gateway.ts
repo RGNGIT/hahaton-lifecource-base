@@ -1,30 +1,40 @@
-import { WebSocketGateway, SubscribeMessage, MessageBody, OnGatewayDisconnect, OnGatewayConnection, WebSocketServer, OnGatewayInit } from '@nestjs/websockets';
+
+import { OnModuleInit } from '@nestjs/common';
 import { ChatService } from './chat.service';
-import { Server, Socket } from 'socket.io';
 import { MessageDto } from './dto/message.dto';
+import { WebSocket } from 'ws';
 
-@WebSocketGateway()
-export class ChatGateway implements OnGatewayInit,  OnGatewayConnection, OnGatewayDisconnect{
-  @WebSocketServer() server: Server;
-  constructor(private readonly chatService: ChatService) {}
+export class ChatGateway implements OnModuleInit {
+  constructor(private readonly chatService: ChatService) { }
 
-  handleConnection(client: Socket, ...args: any[]) {
-    console.log(`Client connected: ${client.id}`);
-  }
+  onModuleInit() {
+    const server = new WebSocket.Server({ port: 3000 });
+    let clients = [];
 
-  handleDisconnect(client: Socket) {
-    console.log(`Client disconnected: ${client.id}`);
-  }
- 
-  afterInit(server: Server) {
-    console.log(`WebSocket server initialized`);
-    //Выполняем действия
-  }
-  
+    server.on('connection', function connection(client) {
+      console.log('Новое соединение установлено');
 
-  @SubscribeMessage('sendMessage')
-  async handleSendMessage(client: Socket, messageDto: MessageDto) {
-    const msg = await this.chatService.createMessage(messageDto);
-    this.server.emit('newMessage', msg);
+      client.on('message', async (message) => {
+        const messageDto = JSON.parse(message) as MessageDto;
+
+        if (messageDto.onConnect) {
+          clients.push({ clientId: messageDto.sender_id, clientHandle: client })
+          client.send("Успешно подконнектился");
+          return;
+        }
+
+        const current = clients.find(c => c.clientId == messageDto.receiver_id);
+
+        if (current && !current.onConnect)
+          current.clientHandle.send(messageDto.text);
+      });
+
+      client.on('close', () => {
+        const c = clients.find(c => c.clientHandle == client);
+
+        if (c)
+          clients.splice(clients.indexOf(c), 1);
+      });
+    });
   }
 }
