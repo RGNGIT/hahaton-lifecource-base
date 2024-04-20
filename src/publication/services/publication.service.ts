@@ -46,10 +46,20 @@ export class PublicationService {
   }
 
   async AddToFavorites(publication_id: number, user_id: number) {
-    const favorites = await this.favoritesRepository.create({ user_id, publication_id });
 
-    await this.publicationsRepository.update({likes: sequelize.literal('likes + 1') }, { where: { publication_id } });
-    return favorites;
+    const existFavorites = await this.favoritesRepository.findOne({where: {user_id, publication_id }}); 
+    if(!existFavorites)
+    {
+        const favorites = await this.favoritesRepository.create({ user_id, publication_id });
+        await this.publicationsRepository.update({likes: sequelize.literal('likes + 1') }, { where: { id: publication_id } });
+        return favorites;
+    }
+    else{
+      const favorites = await this.favoritesRepository.destroy({where: { user_id, publication_id }});
+      await this.publicationsRepository.update({likes: sequelize.literal('likes - 1') }, { where: { id: publication_id } });
+      return favorites;
+    }
+      
   }
 
   async GetMyFavorites(user_id: number){
