@@ -48,7 +48,7 @@ export class PublicationService {
   async AddToFavorites(publication_id: number, user_id: number) {
     const favorites = await this.favoritesRepository.create({ user_id, publication_id });
 
-    await this.publicationsRepository.update({likes: sequelize.literal('likes + 1') }, { where: { publication_id } });
+    await this.publicationsRepository.update({likes: sequelize.literal('likes + 1') }, { where: { id: publication_id } });
     return favorites;
   }
 
