@@ -18,6 +18,11 @@ export class AchievementController {
     return this.achievementService.create(createAchievementDto);
   }
 
+  @Get("user/:id")
+  getByUser(@Param('id') id: number) {
+    return this.achievementService.getManyByUser(id);
+  } 
+
   @Get()
   findAll(@Query() queryParams) {
     return this.achievementService.findAll(queryParams);
