@@ -21,21 +21,13 @@ export class CdnController {
   }
 
   @Post('upload')
-  // @UseInterceptors(FileInterceptor('file'))
-  // async uploadFile(@UploadedFile() file: Express.Multer.File) {
-  //   try {
-  //     return await this.cdnService.writeFile(file.buffer);
-  //   } catch (err) {
-  //     return err;
-  //   }
-  // }
-
-  async uploadFile(req, res: Response) {
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadFile(@UploadedFile() file: Express.Multer.File) {
     try {
-      const { content } = req.files;
-      await this.cdnService.writeFile(content);
+      console.log(file.filename);
+      return await this.cdnService.writeFile(file.buffer);
     } catch (err) {
-      res.json(err);
+      return err;
     }
   }
 
