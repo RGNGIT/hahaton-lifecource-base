@@ -1,8 +1,8 @@
 import FtpClient from 'ftp';
 import CONST from '../const/constants';
-import fs from 'fs';
 
 require('dotenv').config();
+const fs = require('fs');
 
 class FtpService {
   private config = {
