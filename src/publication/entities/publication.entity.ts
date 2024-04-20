@@ -2,6 +2,7 @@ import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "
 import { Blob } from "src/cdn/entities/blob.entity";
 import { User } from "src/user/entities/user.entity";
 import { Comment } from "./comments.entity";
+import { University } from "src/university/entities/university.entity";
 
 @Table
 export class Publication extends Model{
@@ -15,10 +16,7 @@ export class Publication extends Model{
     content: string;
 
     @Column({type: DataType.JSON})
-    fileKeys: string[];
-
-    @Column
-    date: Date;
+    file_keys: string[];
 
     @ForeignKey(() => User)
     author_id: number;
@@ -31,9 +29,13 @@ export class Publication extends Model{
 
     @Column({defaultValue: 0})
     likes: number; 
-    // @HasMany(() => Blob)
-    // blobs: Blob[];
 
     @HasMany(()=>Comment)
     comments: Comment[];
+
+    @ForeignKey(() => User)
+    university_id: number;
+  
+    @BelongsTo(() => University, 'university_id')
+    university: University;
 }

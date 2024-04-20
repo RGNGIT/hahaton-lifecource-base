@@ -1,14 +1,17 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { Event } from './entities/event.entity';
 import constants from 'src/common/constants';
+import { Participants } from './entities/participants.entity';
 
 @Injectable()
 export class EventService {
   constructor(
     @Inject(constants.EVENT_REPOSITORY)
-    private eventsRepository: typeof Event
+    private eventsRepository: typeof Event,
+    @Inject(constants.PARTICIPANTS_REPOSITORY)
+    private participantsRepository: typeof Participants,
   ) { }
 
   async create(createEventDto: CreateEventDto) {
@@ -34,5 +37,28 @@ export class EventService {
   async remove(id: number) {
     const event = await this.eventsRepository.destroy({ where: { id } });
     return event;
+  }
+
+  async addParticipant(user_id: number, event_id: number){
+    const event = await this.eventsRepository.findByPk(event_id);
+    if (!event) {
+      throw new NotFoundException('Мероприятие не найдено');
+    }
+
+    const existingParticipant = await this.participantsRepository.findOne({
+      where: { event_id, user_id }
+    });
+
+    if(existingParticipant){
+      throw new Error('Вы уже участник данного мероприятия');
+    }
+
+    const participant = new this.participantsRepository({
+      event_id,
+      user_id
+    });
+    return participant.save();
+
+
   }
 }

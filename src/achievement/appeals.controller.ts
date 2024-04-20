@@ -58,12 +58,12 @@ export class AppealsController {
     return this.appealsService.remove(+id);
   }
 
-  @Get('accept/:id')
+  @Get(':id/accept')
   accept(@Param('id') id: string) {
     return this.appealsService.accept(+id);
   }
 
-  @Get('decline/:id')
+  @Get(':id/decline')
   decline(@Param('id') id: string) {
     return this.appealsService.decline(+id);
   }
