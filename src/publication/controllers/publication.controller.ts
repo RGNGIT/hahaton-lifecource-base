@@ -48,9 +48,9 @@ export class PublicationController {
     return this.publicationService.update(+id, updatePublicationDto);
   }
 
-  @Post('favorites')
+  @Post(':id/favorites')
   @UseGuards(JwtGuard)
-  AddToFavorites(@GetCurrentUser() user: any, @Query('id') id: string) {
+  AddToFavorites(@GetCurrentUser() user: any, @Param('id') id: string) {
     return this.publicationService.AddToFavorites(+id, user.id);
   }
 

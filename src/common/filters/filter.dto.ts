@@ -9,6 +9,15 @@ class FilterCriteriaDto {
   value: any;
 }
 
+export class IncludeCriteriaDto {
+  @IsString()
+  association: string; // Название связи, например, 'profile' или 'organization'
+
+  @ValidateNested()
+  @Type(() => FilterFieldsDto)
+  fields: FilterFieldsDto; // Поля для фильтрации внутри связи
+}
+
 class SortCriteria {
     @IsString()
     field: string;
@@ -17,7 +26,7 @@ class SortCriteria {
     order: string;
   }
 
-class FilterFieldsDto {
+  export class FilterFieldsDto {
   [key: string]: FilterCriteriaDto;
 }
 
@@ -42,4 +51,10 @@ export class FilterDto {
 
   @IsOptional()
   sortOrder: string;
+
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => IncludeCriteriaDto)
+  includes: IncludeCriteriaDto[]; // Добавляем новое поле для вложенных фильтраций
 }
