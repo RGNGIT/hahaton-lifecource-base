@@ -66,7 +66,7 @@ export class UniversityService {
   // }
 
   async findOne(id: number) {
-    const university = await this.universitiesRepository.findOne({ where: { id }, include: { model: Faculty, include: [{ model: Department, include: [{ model: Direction, include: [{ model: Group }] }] }] } });
+    const university = await this.universitiesRepository.findOne({ where: { id }, include: [{ model: Faculty, include: [{ model: Department, include: [{ model: Direction, include: [{ model: Group }] }] }] }, { model: User }] });
     return university;
   }
 
