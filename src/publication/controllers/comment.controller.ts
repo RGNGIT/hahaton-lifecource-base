@@ -6,6 +6,8 @@ import { CommentService } from '../services/comment.service';
 import { Comment } from '../entities/comments.entity';
 import { CreateCommentDto } from '../dto/create-comment.dto';
 import { UpdateCommentDto } from '../dto/update-comment.dto';
+import { GetCurrentUser } from 'src/common/decorators/get-current-user.decorator';
+import { JwtGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @ApiTags('Комментарии')
 @Controller('comment')
@@ -13,8 +15,9 @@ export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
   @Post()
-  create(@Body() createCommentDto: CreateCommentDto) {
-    return this.commentService.create(createCommentDto);
+  @UseGuards(JwtGuard)
+  create(@GetCurrentUser() user: any, @Body() createCommentDto: CreateCommentDto) {
+    return this.commentService.create(createCommentDto, user.id);
   }
 
 

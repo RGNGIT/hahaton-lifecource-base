@@ -31,4 +31,7 @@ export class Direction extends Model {
 
     @Column({defaultValue: GraduateLevel.none})
     graduate_level: GraduateLevel;
+
+    @Column
+    specialty_code: string;
 }

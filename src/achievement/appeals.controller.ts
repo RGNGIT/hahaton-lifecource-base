@@ -1,10 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request, UseInterceptors } from '@nestjs/common';
 import { AppealsService } from './appeals.service';
 import { CreateAppealDto } from './dto/create-appeal.dto';
 import { UpdateAppealDto } from './dto/update-appeal.dto';
 import { ApiTags } from '@nestjs/swagger'
 import { GetCurrentUser } from 'src/common/decorators/get-current-user.decorator';
 import { JwtGuard } from 'src/auth/guards/jwt-auth.guard';
+import { UseModel } from 'src/common/decorators/use-model.decorator';
+import { Appeal } from './entities/appeal.entity';
+import { FindInterceptor } from 'src/common/filters/find.interceptor';
 
 @ApiTags('Заявка на достижения')
 @Controller('appeal')
@@ -28,6 +31,12 @@ export class AppealsController {
     return this.appealsService.findUserAppeal(user.id);
   }
 
+
+  @Post('all')
+  @UseModel(Appeal)
+  @UseInterceptors(FindInterceptor)
+  filterAll(@Body() FilterDto:any){}
+
   // @UseGuards(JwtGuard)
   // @Get('myrequest')
   // findHRAppeal(@GetCurrentUser() user: any) {
@@ -48,4 +57,16 @@ export class AppealsController {
   remove(@Param('id') id: string) {
     return this.appealsService.remove(+id);
   }
+
+  @Get('accept/:id')
+  accept(@Param('id') id: string) {
+    return this.appealsService.accept(+id);
+  }
+
+  @Get('decline/:id')
+  decline(@Param('id') id: string) {
+    return this.appealsService.decline(+id);
+  }
+  
+  
 }

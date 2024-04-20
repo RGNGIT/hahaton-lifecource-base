@@ -15,8 +15,8 @@ export class CommentService {
     private commentsRepository: typeof Comment
   ) { }
 
-  async create(CreateCommentDto: CreateCommentDto){
-    const comment = await this.commentsRepository.create({ ...CreateCommentDto });
+  async create(CreateCommentDto: CreateCommentDto, user_id: number){
+    const comment = await this.commentsRepository.create({ author_id: user_id,  ...CreateCommentDto });
     return comment;
   }
 
