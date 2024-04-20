@@ -16,8 +16,8 @@ export class PublicationService {
     private favoritesRepository: typeof Favorites,
   ) { }
 
-  async create(createPublicationDto: CreatePublicationDto) {
-    const publication = await this.publicationsRepository.create({ ...createPublicationDto });
+  async create(createPublicationDto: CreatePublicationDto, user_id: number) {
+    const publication = await this.publicationsRepository.create({ author_id: user_id, ...createPublicationDto });
     return publication;
   }
 

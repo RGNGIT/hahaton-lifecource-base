@@ -16,11 +16,10 @@ export class PublicationController {
   constructor(private readonly publicationService: PublicationService) {}
 
   @Post()
-  create(@Body() createPublicationDto: CreatePublicationDto) {
-    return this.publicationService.create(createPublicationDto);
+  @UseGuards(JwtGuard)
+  create(@GetCurrentUser() user: any, @Body() createPublicationDto: CreatePublicationDto) {
+    return this.publicationService.create(createPublicationDto, user.id);
   }
-
-
 
   @Get()
   findAll() {

@@ -123,60 +123,63 @@ return achievement;
 
 function calculateAchievementValue(user: User, event: Event): number {
   // Здесь должна быть логика, которая определяет, профильное ли это достижение для студента
-  var value = 5; // Базовое количество баллов
-  // user.groups.map((x) => {
-  //   const code = x.direction.specialty_code;
-  //   switch( event.section )
-  //   {
-  //     case EventSection.art:
-  //       if(code.startsWith('1')) return 2;
-  //       if(code.startsWith('2')) return 4;
-  //       if(code.startsWith('3')) return 2;
-  //       if(code.startsWith('4')) return 2;
-  //       if(code.startsWith('5')) return 2;
-  //       if(code.startsWith('6')) return 8;
-  //       if(code.startsWith('7')) return 2;
-  //       if(code.startsWith('8')) return 10;
-  //       if(code.startsWith('9')) return 2;
-  //       break;
-  //     case EventSection.science:
-  //       if(code.startsWith('1')) return 10;
-  //       if(code.startsWith('2')) return 10;
-  //       if(code.startsWith('3')) return 10;
-  //       if(code.startsWith('4')) return 10;
-  //       if(code.startsWith('5')) return 10;
-  //       if(code.startsWith('6')) return 10;
-  //       if(code.startsWith('7')) return 10;
-  //       if(code.startsWith('8')) return 10;
-  //       if(code.startsWith('9')) return 10;
-  //       break;
-  //     case EventSection.sport:
-  //       if(code.startsWith('1')) return 2;
-  //       if(code.startsWith('2')) return 2;
-  //       if(code.startsWith('3')) return 4;
-  //       if(code.startsWith('4')) return 2;
-  //       if(code.startsWith('5')) return 2;
-  //       if(code.startsWith('6')) return 2;
-  //       if(code.startsWith('7')) return 2;
-  //       if(code.startsWith('8')) return 6;
-  //       if(code.startsWith('9')) return 10;
-  //       break;
-  //     case EventSection.volunteer:
-  //       if(code.startsWith('1')) return 2;
-  //       if(code.startsWith('2')) return 2;
-  //       if(code.startsWith('3')) return 6;
-  //       if(code.startsWith('4')) return 4;
-  //       if(code.startsWith('5')) return 10;
-  //       if(code.startsWith('6')) return 8;
-  //       if(code.startsWith('7')) return 6;
-  //       if(code.startsWith('8')) return 4;
-  //       if(code.startsWith('9')) return 10;
-  //       break;
-  //     default:
-  //       return baseValue;
-  //   }
-  // })
+  var value = 2; // Базовое количество баллов
 
-  return value;
+const values = [];
+  const usergroups = user.groups
+  user.groups.map((x) => {
+    const code = x.direction.specialty_code;
+    switch( event.section )
+    {
+      case EventSection.art:
+        if(code.startsWith('1')) values.push(2);
+        if(code.startsWith('2')) values.push(4);
+        if(code.startsWith('3')) values.push(2);
+        if(code.startsWith('4')) values.push(2);
+        if(code.startsWith('5')) values.push(2);
+        if(code.startsWith('6')) values.push(8);
+        if(code.startsWith('7')) values.push(2);
+        if(code.startsWith('8')) values.push(10);
+        if(code.startsWith('9')) values.push(2);
+        break;
+      case EventSection.science:
+        if(code.startsWith('1')) values.push(10);
+        if(code.startsWith('2')) values.push(10);
+        if(code.startsWith('3')) values.push(10);
+        if(code.startsWith('4')) values.push(10);
+        if(code.startsWith('5')) values.push(10);
+        if(code.startsWith('6')) values.push(10);
+        if(code.startsWith('7')) values.push(10);
+        if(code.startsWith('8')) values.push(10);
+        if(code.startsWith('9')) values.push(10);
+        break;
+      case EventSection.sport:
+        if(code.startsWith('1')) values.push(2);
+        if(code.startsWith('2')) values.push(2);
+        if(code.startsWith('3')) values.push(4);
+        if(code.startsWith('4')) values.push(2);
+        if(code.startsWith('5')) values.push(2);
+        if(code.startsWith('6')) values.push(2);
+        if(code.startsWith('7')) values.push(2);
+        if(code.startsWith('8')) values.push(6);
+        if(code.startsWith('9')) values.push(10);
+        break;
+      case EventSection.volunteer:
+        if(code.startsWith('1')) values.push(2);
+        if(code.startsWith('2')) values.push(2);
+        if(code.startsWith('3')) values.push(6);
+        if(code.startsWith('4')) values.push(4);
+        if(code.startsWith('5')) values.push(10);
+        if(code.startsWith('6')) values.push(8);
+        if(code.startsWith('7')) values.push(6);
+        if(code.startsWith('8')) values.push(4);
+        if(code.startsWith('9')) values.push(10);
+        break;
+      default:
+        values.push(2);
+    }
+  })
+
+  return Math.max(...values);;
 
 }
