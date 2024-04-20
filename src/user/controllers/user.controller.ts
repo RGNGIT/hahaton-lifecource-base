@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Patch, Post, Query, UseInterceptors } from '@nestjs/common';
 import CreateUserDto from '../dto/create-user.dto';
 import { UserService } from '../services/user.service';
 import UpdateUserDto from '../dto/update-user.dto';
@@ -6,6 +6,9 @@ import { createConfirmationUser, checkConfirm } from '../../helpers/email-confir
 import DefineUserRoleDto from '../dto/define-user-role.dto';
 import { ApiTags } from '@nestjs/swagger'
 import { RoleService } from 'src/role/services/role.service';
+import { UseModel } from 'src/common/decorators/use-model.decorator';
+import { User } from '../entities/user.entity';
+import { FindInterceptor } from 'src/common/filters/find.interceptor';
 
 @ApiTags('Пользователи')
 @Controller()
@@ -38,6 +41,7 @@ export class UserController {
   async createUser(@Body() createUser: UpdateUserDto) {
     return await this.userService.create(createUser);
   }
+
 
   @Post('createWorkgiver')
   async createWorkgiver(@Body() createUser: CreateUserDto) {
@@ -87,6 +91,12 @@ export class UserController {
     const users = await this.userService.findAll();
     return users;
   }
+
+  @Post('all')
+  @UseModel(User)
+  @UseInterceptors(FindInterceptor)
+  filterAll(@Body() FilterDto:any){}
+
 
   @Get('fio')
   async findByFio(@Query('q') q: string) {

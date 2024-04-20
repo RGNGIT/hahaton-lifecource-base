@@ -53,6 +53,11 @@ export class AchievementController {
     return await this.achievementService.getTop10ByValue();
   }
 
+  @Get("/rating")
+  async getRating() {
+    return await this.achievementService.getUsersRating();
+  }
+
   @Get('/section')
   getByType(@Query("section") section: EventSection){
      return this.achievementService.getByType(section);
