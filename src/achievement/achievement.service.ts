@@ -58,10 +58,15 @@ export class AchievementService {
     return top;
   }
 
-  
   async getByType(section: EventSection){
 
     const achievements = await this.achievementRepository.findAndCountAll({include: [ {model: Event, where: {section}}]});
     return {data: achievements.rows, total: achievements.count};
+  }
+
+  async getManyByUser(id: number) {
+    const achievements = await this.achievementRepository.findAll({ where: { user_id: id } });
+    return achievements;
+
   }
 }
