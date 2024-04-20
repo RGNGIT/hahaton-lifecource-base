@@ -6,6 +6,7 @@ import { createConfirmationUser, checkConfirm } from '../../helpers/email-confir
 import DefineUserRoleDto from '../dto/define-user-role.dto';
 import { ApiTags } from '@nestjs/swagger'
 import { RoleService } from 'src/role/services/role.service';
+import FriendDto from '../dto/friend.dto';
 import { UseModel } from 'src/common/decorators/use-model.decorator';
 import { User } from '../entities/user.entity';
 import { FindInterceptor } from 'src/common/filters/find.interceptor';
@@ -135,5 +136,15 @@ export class UserController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.delete(+id);
+  }
+
+  @Post()
+  addFriend(@Body() friendDto: FriendDto) {
+    return this.userService.addFriend(friendDto.user_one, friendDto.user_two);
+  }
+
+  @Delete()
+  unfriend(@Body() friendDto: FriendDto) {
+    return this.userService.unfriend(friendDto.user_one, friendDto.user_two);
   }
 }

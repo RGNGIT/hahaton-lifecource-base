@@ -2,6 +2,7 @@ import { User } from "../entities/user.entity";
 import constants from "../../common/constants";
 import { UserRoles } from "../entities/user-roles.entity";
 import { Role } from "src/role/entities/role.entity";
+import { Friends } from "../entities/friends.entity";
 
 export const usersProvider = [
   {
@@ -15,5 +16,9 @@ export const usersProvider = [
   {
     provide: constants.ROLES_REPOSITORY,
     useValue: Role,
+  },
+  {
+    provide: constants.FRIENDS_REPOSITORY,
+    useValua: Friends
   }
 ];

@@ -15,6 +15,7 @@ import { Direction } from 'src/university/entities/direction.entity';
 import { Department } from 'src/university/entities/department.entity';
 import { Faculty } from 'src/university/entities/faculty.entity';
 import { Op } from 'sequelize';
+import { Friends } from '../entities/friends.entity';
 import { University } from 'src/university/entities/university.entity';
 import { Achievement } from 'src/achievement/entities/achievement.entity';
 
@@ -27,6 +28,8 @@ export class UserService {
     private userRolesRepository: typeof UserRoles,
     @Inject(constants.STUDENTS_REPOSITORY)
     private studentRepository: typeof Students,
+    @Inject(constants.FRIENDS_REPOSITORY)
+    private friendsRepository: typeof Friends
   ) { }
 
   async defineUserRole(define: DefineUserRoleDto): Promise<UserRoles> {
@@ -63,9 +66,9 @@ export class UserService {
     const whereCondition = {
       [Op.or]: names.map(name => ({
         [Op.or]: [
-          { first_name: { [Op.like]: '%'+name+'%' } },
-          { last_name: { [Op.like]: '%'+name+'%' } },
-          { middle_name: { [Op.like]: '%'+name +'%'} }
+          { first_name: { [Op.like]: '%' + name + '%' } },
+          { last_name: { [Op.like]: '%' + name + '%' } },
+          { middle_name: { [Op.like]: '%' + name + '%' } }
         ]
       }))
     };
@@ -100,12 +103,21 @@ export class UserService {
     return user;
   }
 
-  async getUsersUniversity(user_id: number){
-    const user = await this.usersRepository.findByPk(user_id, {include: [{model: Group, include: [{model: Direction, include: [{model: Department, include: [{model: Faculty}]}]}] }]});
-    if(!user) throw new HttpException("Пользователь не найден", HttpStatus.BAD_REQUEST);
-    const universities_id = []; 
-    user.groups.forEach((x)=>universities_id.push(x.direction.department.faculty.university_id));
+  async getUsersUniversity(user_id: number) {
+    const user = await this.usersRepository.findByPk(user_id, { include: [{ model: Group, include: [{ model: Direction, include: [{ model: Department, include: [{ model: Faculty }] }] }] }] });
+    if (!user) throw new HttpException("Пользователь не найден", HttpStatus.BAD_REQUEST);
+    const universities_id = [];
+    user.groups.forEach((x) => universities_id.push(x.direction.department.faculty.university_id));
     return universities_id;
   }
 
+  async addFriend(user_one: number, user_two: number) {
+    const friend = await this.friendsRepository.create({ user_one_id: user_one, user_two_id: user_two });
+    return friend;
+  }
+
+  async unfriend(user_one: number, user_two: number) {
+    const friend = await this.friendsRepository.destroy({ where: [{ user_one_id: user_one }, { user_two_id: user_two }] });
+    return friend;
+  }
 }
