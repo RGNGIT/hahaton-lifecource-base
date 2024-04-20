@@ -10,7 +10,7 @@ import { FindInterceptor } from 'src/common/filters/find.interceptor';
 @ApiTags('ВУЗы')
 @Controller('university')
 export class UniversityController {
-  constructor(private readonly universityService: UniversityService) {}
+  constructor(private readonly universityService: UniversityService) { }
 
   @Post()
   create(@Body() createUniversityDto: CreateUniversityDto) {
@@ -18,14 +18,14 @@ export class UniversityController {
   }
 
   @Post('all')
-  @UseModel(University) 
+  @UseModel(University)
   @UseInterceptors(FindInterceptor)
   filterData(@Body() FilterDto: any) {
     // return this.universalFindService.findAll(University, FilterDto);
   }
 
   @Get()
-  findAll(){
+  findAll() {
     return this.universityService.findAll();
   }
 
@@ -45,8 +45,8 @@ export class UniversityController {
   }
 
   @Patch('/university/admin/:id')
-  addAdmin(@Param('id') id: number, @Body() admin_id: number) {
-    return this.universityService.addAdmin(id, admin_id);
+  addAdmin(@Param('id') id: number, @Body() shit: { admin_id }) {
+    return this.universityService.addAdmin(id, shit.admin_id);
   }
 
   @Get(':id/students')
