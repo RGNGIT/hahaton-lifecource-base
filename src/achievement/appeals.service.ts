@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { CreateAppealDto } from './dto/create-appeal.dto';
 import { UpdateAppealDto } from './dto/update-appeal.dto';
 import constants from 'src/common/constants';
@@ -10,6 +10,7 @@ import { EventSection } from 'src/common/enums/event_section.enum';
 import { User } from 'src/user/entities/user.entity';
 import { University } from 'src/university/entities/university.entity';
 import { Group } from 'src/university/entities/group.entity';
+import { Students } from 'src/university/entities/students.entity';
 
 @Injectable()
 export class AppealsService {
@@ -22,6 +23,11 @@ export class AppealsService {
   ) { }
 
   async create(createAppealDto: CreateAppealDto, user_id: number): Promise<Appeal> {
+    const existAppeal = await this.appealsRepository.findOne({where: {user_id, event_id: createAppealDto.event_id}});
+    if(existAppeal){
+      throw new HttpException("Вы уже подали заявку на достижение по данному мероприятию", HttpStatus.BAD_REQUEST);
+    }
+
     const newAppeal = await this.appealsRepository.create({ user_id, ...createAppealDto });
     return newAppeal;
   }
@@ -68,7 +74,7 @@ export class AppealsService {
   }
 
   async accept(id: number){
-    const appeal = await Appeal.findByPk(id, {
+    const appeal = await this.appealsRepository.findByPk(id, {
       include: [{
           model: User,
           include: [{ model: Group }] // Загрузка данных факультета пользователя
@@ -78,34 +84,41 @@ export class AppealsService {
       }]
     
     });
-    if (!appeal) throw new Error('Заявка не найдена');
+    if (!appeal) throw new HttpException('Заявка не найдена', HttpStatus.BAD_REQUEST);
 
+    if(appeal.status != AppealStatus.new) throw new HttpException('Заявка уже обработана', HttpStatus.BAD_REQUEST);
     const user = appeal.applicant;
     const event = appeal.event;
 
     const value = calculateAchievementValue(user, event);
 
-    let achievement = await Achievement.findOne({
+    let achievement = await this.achievementRepository.findOne({
       where: { appeal_id: id },     
     });
     if (achievement) {
-      achievement.value = value;
+      await this.achievementRepository.update({ value }, { where: { id: achievement.id } });
+
     } else {
-      achievement = await Achievement.create({
+      achievement = await this.achievementRepository.create({
         value,
-        date: new Date(),
         user_id: user.id,
         appeal_id: appeal.id,
         event_id: event.id
       });
-  }
-    appeal.status = AppealStatus.accepted;
-    await appeal.save();
+    }
+
+    await this.appealsRepository.update({ status: AppealStatus.accepted }, { where: { id } });
+
     return achievement;
   }
 
   async decline(id: number){
-    const appeal = await this.appealsRepository.update({ status: AppealStatus.declined }, { where: { id } });
+
+    const existAppeal = await this.appealsRepository.findByPk(id);
+    if (!existAppeal) throw new HttpException('Заявка не найдена', HttpStatus.BAD_REQUEST);
+
+    if(existAppeal.status != AppealStatus.new) throw new HttpException('Заявка уже обработана', HttpStatus.BAD_REQUEST);
+    await this.appealsRepository.update({ status: AppealStatus.declined }, { where: { id } });
     return "Заявка отклонена"
   }
 
@@ -113,11 +126,12 @@ export class AppealsService {
 
 
 function calculateAchievementValue(user: User, event: Event): number {
-  // Здесь должна быть логика, которая определяет, профильное ли это достижение для студента
-  var value = 2; // Базовое количество баллов
-
-const values = [];
-  const usergroups = user.groups
+const values = [2];
+console.log(user)
+  const usergroups = user.groups;
+  if(usergroups == null) {
+    throw new HttpException("Студент не состоит ни в одной группе",HttpStatus.BAD_REQUEST)
+  }
   user.groups.map((x) => {
     const code = x.direction.specialty_code;
     switch( event.section )
