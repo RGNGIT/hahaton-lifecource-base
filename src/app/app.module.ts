@@ -15,6 +15,7 @@ import { EventModule } from 'src/event/event.module';
 import { PublicationModule } from 'src/publication/publication.module';
 import { VacancyModule } from 'src/vacancies/vacancy.module';
 import { UserContentModule } from 'src/user-content/user-content.module';
+import { ChatModule } from 'src/chat/chat.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { UserContentModule } from 'src/user-content/user-content.module';
     PublicationModule,
     VacancyModule,
     UserContentModule,
+    ChatModule,
     RouterModule.register([{
       path: path.API_REQUEST,
       children: [{
@@ -75,7 +77,11 @@ import { UserContentModule } from 'src/user-content/user-content.module';
       {
         path: path.USER_CONTENT_MODULE,
         module: UserContentModule
-      }
+      },
+      {
+        path: path.CHAT_MODULE,
+        module: ChatModule
+      },
       ]
     }
     ])

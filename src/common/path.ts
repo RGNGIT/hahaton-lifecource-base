@@ -22,6 +22,7 @@ export default {
   PUBLICATION_MODULE: "publications",
   VACANCY_MODULE: "vacancies",
   USER_CONTENT_MODULE: "userContents",
+  CHAT_MODULE: "chat",
   // Юзвери
   NEW_USER: "new"
 };
