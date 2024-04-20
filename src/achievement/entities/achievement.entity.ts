@@ -11,10 +11,6 @@ export class Achievement extends Model {
     @Column
     value: number;
 
-    @Column
-    date: Date;
-
-
     @ForeignKey(() => User)
     user_id: number;
   

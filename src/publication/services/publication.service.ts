@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 
 import constants from 'src/common/constants';
 import { Publication } from '../entities/publication.entity';
@@ -6,6 +6,9 @@ import { CreatePublicationDto } from '../dto/create-publication.dto';
 import { UpdatePublicationDto } from '../dto/update-publication.dto';
 import { Favorites } from '../entities/favorites.entity';
 import sequelize, { Model } from 'sequelize';
+import { User } from 'src/user/entities/user.entity';
+import { Group } from 'src/university/entities/group.entity';
+import { UserService } from 'src/user/services/user.service';
 
 @Injectable()
 export class PublicationService {
@@ -13,7 +16,7 @@ export class PublicationService {
     @Inject(constants.PUBLICATION_REPOSITORY)
     private publicationsRepository: typeof Publication,
     @Inject(constants.FAVORITES_REPOSITORY)
-    private favoritesRepository: typeof Favorites,
+    private favoritesRepository: typeof Favorites
   ) { }
 
   async create(createPublicationDto: CreatePublicationDto, user_id: number) {
