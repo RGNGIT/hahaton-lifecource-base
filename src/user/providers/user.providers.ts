@@ -19,6 +19,6 @@ export const usersProvider = [
   },
   {
     provide: constants.FRIENDS_REPOSITORY,
-    useValua: Friends
+    useValue: Friends
   }
 ];
