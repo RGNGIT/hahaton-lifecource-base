@@ -49,6 +49,11 @@ export class UniversityController {
     return this.universityService.addAdmin(id, shit.admin_id);
   }
 
+  @Get('/university/admin/:id')
+  findByAdmin(@Param('id') id: number) {
+    return this.universityService.findByAdmin(+id);
+  }
+
   @Get(':id/students')
   getStudentsCount(@Param('id') id: number) {
     return this.universityService.getUniversityStudentsCount(id);

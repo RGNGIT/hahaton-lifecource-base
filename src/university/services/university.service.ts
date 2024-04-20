@@ -70,6 +70,11 @@ export class UniversityService {
     return university;
   }
 
+  async findByAdmin(id: number) {
+    const universities = await this.universitiesRepository.findAll({ include: [{ model: User, where: { id } }] });
+    return universities;
+  }
+
   async update(id: number, updateUniversityDto: UpdateUniversityDto) {
     const university = await this.universitiesRepository.update({ ...updateUniversityDto }, { where: { id } });
     return university;
