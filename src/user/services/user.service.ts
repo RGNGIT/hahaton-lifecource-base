@@ -15,6 +15,7 @@ import { Direction } from 'src/university/entities/direction.entity';
 import { Department } from 'src/university/entities/department.entity';
 import { Faculty } from 'src/university/entities/faculty.entity';
 import { Op } from 'sequelize';
+import { University } from 'src/university/entities/university.entity';
 
 @Injectable()
 export class UserService {
@@ -33,7 +34,7 @@ export class UserService {
   }
 
   async findOne(id): Promise<User> {
-    const user = await this.usersRepository.findOne({ where: { id }, include: [{ model: Role }, { model: Group, include: [{ model: Direction, include: [{ model: Department, include: [{ model: Faculty }] }] }] }, { model: Locality, include: [{ model: Region }] }] });
+    const user = await this.usersRepository.findOne({ where: { id }, include: [{ model: Role }, { model: Group, include: [{ model: Direction, include: [{ model: Department, include: [{ model: Faculty, include: [{model: University}] }] }] }] }, { model: Locality, include: [{ model: Region }] }] });
     return user;
   }
 
