@@ -88,6 +88,12 @@ export class UserController {
     return users;
   }
 
+  @Get('fio')
+  async findByFio(@Query('q') q: string) {
+    const users = await this.userService.findByFio(q);
+    return users;
+  }
+
   // DEPRECATED LOGIN MOVED TO AUTH
   // @Post('login')
   // async login(@Body() loginUser: LoginUserDto) {
