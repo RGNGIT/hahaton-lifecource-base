@@ -68,7 +68,7 @@ export const dbProviders = [
         Invitation,
         Organization,
       ]);
-      await sequelize.sync({ alter: true });
+      await sequelize.sync(/*{ alter: true }*/);
       
       return sequelize;
     }

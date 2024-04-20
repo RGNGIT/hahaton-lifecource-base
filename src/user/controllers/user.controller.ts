@@ -29,19 +29,30 @@ export class UserController {
 
   @Post('createOnPortal')
   async postNewUser(@Body() createUser: CreateUserDto) {
-    const result = await createConfirmationUser(createUser);
+    if (createUser.is_admin) {
+      const user = await this.userService.create(createUser);
 
-    if (!result)
-      throw new HttpException('Something happened while processing', HttpStatus.INTERNAL_SERVER_ERROR);
+      const roleDto = new DefineUserRoleDto();
+      roleDto.role_id = (await this.roleService.getRoleByName('Админ')).id;
+      roleDto.user_id = user.id;
 
-    return 1;
+      await this.defineRole(roleDto);
+
+      return await this.userService.findOne(user.id);
+    } else {
+      const result = await createConfirmationUser(createUser);
+
+      if (!result)
+        throw new HttpException('Something happened while processing', HttpStatus.INTERNAL_SERVER_ERROR);
+
+      return 1;
+    }
   }
 
   @Post('createUser')
   async createUser(@Body() createUser: UpdateUserDto) {
     return await this.userService.create(createUser);
   }
-
 
   @Post('createWorkgiver')
   async createWorkgiver(@Body() createUser: CreateUserDto) {
@@ -95,7 +106,7 @@ export class UserController {
   @Post('all')
   @UseModel(User)
   @UseInterceptors(FindInterceptor)
-  filterAll(@Body() FilterDto:any){}
+  filterAll(@Body() FilterDto: any) { }
 
 
   @Get('fio')
