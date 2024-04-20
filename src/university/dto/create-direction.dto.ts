@@ -13,4 +13,6 @@ export class CreateDirectionDto {
     department_id: number;
     @ApiPropertyOptional()
     graduate_level?: GraduateLevel;
+    @ApiProperty()
+    specialty_code: string;
 }

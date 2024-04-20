@@ -34,11 +34,14 @@ export class FindService {
     const offset = page * pageSize;
     const limit = pageSize;
 
+    
+
     return await model.findAndCountAll({
       where,
       order,
       offset,
-      limit
+      limit,
+      include: {all: true}
     });
   }
 }

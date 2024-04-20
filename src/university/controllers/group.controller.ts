@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors } from '@nestjs/common';
 import { GroupService } from '../services/group.service';
 import { CreateGroupDto } from '../dto/create-group.dto';
 import { UpdateGroupDto } from '../dto/update-group.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { UseModel } from 'src/common/decorators/use-model.decorator';
+import { Group } from '../entities/group.entity';
+import { FindInterceptor } from 'src/common/filters/find.interceptor';
 
 @ApiTags('Группы')
 @Controller('group')
@@ -17,6 +20,12 @@ export class GroupController {
   @Get()
   findAll() {
     return this.groupService.findAll();
+  }
+  
+  @Post('all')
+  @UseModel(Group) 
+  @UseInterceptors(FindInterceptor)
+  filterData(@Body() FilterDto: any) {
   }
 
   @Get('one/:id')
