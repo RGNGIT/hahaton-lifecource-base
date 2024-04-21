@@ -16,10 +16,14 @@ export class CommentService {
   ) { }
 
   async create(CreateCommentDto: CreateCommentDto, user_id: number){
-    const comment = await this.commentsRepository.create({ author_id: user_id,  ...CreateCommentDto });
+    const comment = await this.commentsRepository.create({  user_id,  ...CreateCommentDto });
     return comment;
   }
 
+  async findAll() {
+    const comments = await this.commentsRepository.findAll({ include: { all: true } });
+    return comments;
+  }
 
   async findOne(id: number) {
     const comment = await this.commentsRepository.findOne({ where: { id }, include: { all: true } });

@@ -20,6 +20,11 @@ export class CommentController {
     return this.commentService.create(createCommentDto, user.id);
   }
 
+  @Get()
+  findAll() {
+    return this.commentService.findAll();
+  }
+
 
   @Post('all')
   @UseModel(Comment)
