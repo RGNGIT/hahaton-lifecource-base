@@ -2,6 +2,7 @@ import { BelongsTo, Column, ForeignKey, HasMany, Model, Table } from "sequelize-
 import { User } from "src/user/entities/user.entity";
 import { Region } from "./region.entity";
 import { University } from "src/university/entities/university.entity";
+import { Organization } from "src/vacancies/entities/organization.entity";
 
 
 @Table
@@ -21,4 +22,7 @@ export class Locality extends Model {
 
   @HasMany(() => University)
   universities: University[];
+
+  @HasMany(() => Organization)
+  organizations: Organization[];
 }
