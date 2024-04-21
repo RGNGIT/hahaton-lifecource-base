@@ -26,12 +26,16 @@ export class AppealsService {
   ) { }
 
   async create(createAppealDto: CreateAppealDto, user_id: number): Promise<Appeal> {
-    const existAppeal = await this.appealsRepository.findOne({where: {user_id, event_id: createAppealDto.event_id}});
+
+    console.log(createAppealDto, user_id);
+    const existAppeal = await this.appealsRepository.findOne({where: {user_id: user_id, event_id: createAppealDto.event_id}});
+    console.log(existAppeal);
+
     if(existAppeal){
       throw new HttpException("Вы уже подали заявку на достижение по данному мероприятию", HttpStatus.BAD_REQUEST);
     }
 
-    const newAppeal = await this.appealsRepository.create({ user_id, ...createAppealDto });
+    const newAppeal = await this.appealsRepository.create({ user_id: user_id, ...createAppealDto });
     return newAppeal;
   }
 
@@ -91,7 +95,7 @@ export class AppealsService {
     if (!appeal) throw new HttpException('Заявка не найдена', HttpStatus.BAD_REQUEST);
 
     if(appeal.status != AppealStatus.new) throw new HttpException('Заявка уже обработана', HttpStatus.BAD_REQUEST);
-    const user = appeal.applicant;
+    const user = appeal.user;
     const event = appeal.event;
 
     const value = calculateAchievementValue(user, event);
