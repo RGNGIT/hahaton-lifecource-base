@@ -5,7 +5,7 @@ import { Locality } from 'src/localities/entities/locality.entity';
 import { Appeal } from 'src/achievement/entities/appeal.entity';
 import { Group } from 'src/university/entities/group.entity';
 import { Students } from 'src/university/entities/students.entity';
-import { Participants } from 'src/event/entities/participants.entity';
+// import { Participants } from 'src/event/entities/participants.entity';
 import { Event } from 'src/event/entities/event.entity';
 import { Admins } from 'src/university/entities/admins.entity';
 import { University } from 'src/university/entities/university.entity';
@@ -50,7 +50,7 @@ export class User extends Model {
   @BelongsToMany(() => University, () => Admins)
   universities: University[];
 
-  @BelongsToMany(() => Event, () => Participants)
+  @BelongsToMany(() => Event, () => Appeal)
   events: Event[];
 
   @Column
@@ -69,8 +69,8 @@ export class User extends Model {
   @BelongsTo(() => Locality)
   locality: Locality;
 
-  @HasMany(() => Appeal, 'applicant_id')
-  appeals: Appeal[];
+  // @HasMany(() => Appeal, 'applicant_id')
+  // appeals: Appeal[];
 
   @HasMany(() => Achievement, 'user_id')
   achievements: Achievement[];

@@ -19,7 +19,7 @@ import { Event } from "src/event/entities/event.entity";
 import { Achievement } from "src/achievement/entities/achievement.entity";
 import { Publication } from "src/publication/entities/publication.entity";
 import { Admins } from "src/university/entities/admins.entity";
-import { Participants } from "src/event/entities/participants.entity";
+// import { Participants } from "src/event/entities/participants.entity";
 import { Comment } from "src/publication/entities/comments.entity";
 import { Favorites } from "src/publication/entities/favorites.entity";
 import { Vacancy } from "src/vacancies/entities/vacancy.entity";
@@ -58,7 +58,7 @@ export const dbProviders = [
         Group, 
         Students, 
         Admins, 
-        Participants, 
+        // Participants, 
         Event, 
         Achievement, 
         Publication, 
