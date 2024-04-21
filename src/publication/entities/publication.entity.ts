@@ -1,7 +1,8 @@
-import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
+import { BelongsTo, BelongsToMany, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
 import { User } from "src/user/entities/user.entity";
 import { Comment } from "./comments.entity";
 import { University } from "src/university/entities/university.entity";
+import { Favorites } from "./favorites.entity";
 
 @Table
 export class Publication extends Model{
@@ -40,4 +41,8 @@ export class Publication extends Model{
   
     @BelongsTo(() => University, 'university_id')
     university: University;
+
+    @BelongsToMany(() => User, () => Favorites)
+    users: Favorites[];
+  
 }

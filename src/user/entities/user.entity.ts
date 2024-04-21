@@ -15,6 +15,8 @@ import { Comment } from 'src/publication/entities/comments.entity';
 import { Invitation } from 'src/invitations/entities/invitation.entity';
 import { Friends } from './friends.entity';
 import { Organization } from 'src/vacancies/entities/organization.entity';
+import { Publication } from 'src/publication/entities/publication.entity';
+import { Favorites } from 'src/publication/entities/favorites.entity';
 
 @Table
 export class User extends Model {
@@ -53,6 +55,9 @@ export class User extends Model {
 
   @BelongsToMany(() => Event, () => Appeal)
   events: Event[];
+
+  @BelongsToMany(() => Publication, () => Favorites)
+  favorites: Favorites[];
 
   @Column
   email: string;
