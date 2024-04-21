@@ -6,7 +6,7 @@ import { User } from "src/user/entities/user.entity";
 
 
 @Table
-export class Appeal extends Model {
+export class Appeal extends Model<Appeal> {
   
   @Column({ type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true })
   id: number;
@@ -18,10 +18,10 @@ export class Appeal extends Model {
   status: AppealStatus;
 
   @ForeignKey(() => User)
-  applicant_id: number;
+  user_id: number;
 
-  @BelongsTo(() => User, 'applicant_id')
-  applicant: User;
+  @BelongsTo(() => User, 'user_id')
+  user: User;
 
   @ForeignKey(() => Event)
   event_id: number;
