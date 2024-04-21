@@ -7,4 +7,6 @@ export class CreateVacancyDto {
   description: string;
   @ApiProperty()
   organization_id:number;
+  @ApiProperty()
+  locality_id: number;
 }
