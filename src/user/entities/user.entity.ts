@@ -57,7 +57,7 @@ export class User extends Model {
   events: Event[];
 
   @BelongsToMany(() => Publication, () => Favorites)
-  favorites: Favorites[];
+  favorites: Publication[];
 
   @Column
   email: string;

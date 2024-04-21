@@ -1,4 +1,4 @@
-import { Model, Column, DataType, Table, BelongsToMany, ForeignKey, CreatedAt } from "sequelize-typescript";
+import { Model, Column, DataType, Table, BelongsToMany, ForeignKey, CreatedAt, BelongsTo } from "sequelize-typescript";
 import { User } from "src/user/entities/user.entity";
 import { Publication } from "./publication.entity";
 
@@ -16,4 +16,9 @@ export class Favorites extends Model<Favorites> {
   @ForeignKey(() => Publication)
   @Column({ type: DataType.INTEGER })
   publication_id: number;
+
+  @BelongsTo(() => Publication)
+  publications: Publication[];
+
+
 }

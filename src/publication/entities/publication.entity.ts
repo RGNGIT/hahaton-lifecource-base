@@ -43,6 +43,6 @@ export class Publication extends Model{
     university: University;
 
     @BelongsToMany(() => User, () => Favorites)
-    users: Favorites[];
+    users: User[];
   
 }
