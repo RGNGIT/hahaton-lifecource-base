@@ -14,7 +14,7 @@ export class Organization extends Model {
   @Column
   short_name: string;
 
-  @Column
+  @Column({ type: DataType.TEXT })
   description: string;
 
   @Column
@@ -36,14 +36,14 @@ export class Organization extends Model {
   @ForeignKey(() => User)
   @Column
   owner_id: number;
-  
+
   @BelongsTo(() => User, 'owner_id')
   owner: User;
-  
+
   @ForeignKey(() => Locality)
   @Column
   locality_id: number;
-  
+
   @BelongsTo(() => Locality)
   locality: Locality;
 

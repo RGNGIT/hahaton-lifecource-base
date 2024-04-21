@@ -11,7 +11,6 @@ export class Comment extends Model{
     @Column
     text: string;
 
-
     @ForeignKey(() => Publication)
     publication_id: number;
   
