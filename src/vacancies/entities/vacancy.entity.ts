@@ -20,19 +20,19 @@ export class Vacancy extends Model {
   @BelongsToMany(() => User, () => UserVacancies)
   users: User[];
 
-  @ForeignKey(() => User)
-  @Column
-  author_id: number;
+  // @ForeignKey(() => User)
+  // @Column
+  // author_id: number;
 
-  @BelongsTo(() => User)
-  author: User;
+  // @BelongsTo(() => User)
+  // author: User;
 
-  @ForeignKey(() => Locality)
-  @Column
-  locality_id: number;
+  // @ForeignKey(() => Locality)
+  // @Column
+  // locality_id: number;
   
-  @BelongsTo(() => Locality)
-  locality: Locality;
+  // @BelongsTo(() => Locality)
+  // locality: Locality;
 
   @ForeignKey(() => Organization)
   @Column

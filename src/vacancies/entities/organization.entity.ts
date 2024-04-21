@@ -1,5 +1,7 @@
 import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
 import { Vacancy } from "./vacancy.entity";
+import { User } from "src/user/entities/user.entity";
+import { Locality } from "src/localities/entities/locality.entity";
 
 @Table
 export class Organization extends Model {
@@ -16,6 +18,9 @@ export class Organization extends Model {
   description: string;
 
   @Column
+  address: string;
+
+  @Column
   INN: string;
 
   @Column
@@ -24,7 +29,22 @@ export class Organization extends Model {
   @Column
   photo: string;
 
+
   @HasMany(() => Vacancy)
   vacancies: Vacancy;
+
+  @ForeignKey(() => User)
+  @Column
+  owner_id: number;
+  
+  @BelongsTo(() => User, 'owner_id')
+  owner: User;
+  
+  @ForeignKey(() => Locality)
+  @Column
+  locality_id: number;
+  
+  @BelongsTo(() => Locality)
+  locality: Locality;
 
 }
