@@ -7,6 +7,7 @@ import { JwtGuard } from 'src/auth/guards/jwt-auth.guard';
 import { GetCurrentUser } from 'src/common/decorators/get-current-user.decorator';
 import { UseModel } from 'src/common/decorators/use-model.decorator';
 import { FindInterceptor } from 'src/common/filters/find.interceptor';
+import { Event } from './entities/event.entity';
 
 @ApiTags('Мероприятия')
 @Controller('event')

@@ -3,5 +3,5 @@ export enum EventSection {
     science = "Наука",
     sport = "Спорт",
     art = "Творчество",
-    volunteer = "Волонтёрство"
+    volunteer = "Волонтерство"
   }
