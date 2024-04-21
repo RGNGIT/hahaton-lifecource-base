@@ -2,8 +2,9 @@ import { BelongsTo, BelongsToMany, Column, DataType, ForeignKey, HasMany, Model,
 import { EventSection } from "src/common/enums/event_section.enum";
 import { University } from "src/university/entities/university.entity";
 import { User } from "src/user/entities/user.entity";
-import { Participants } from "./participants.entity";
+// import { Participants } from "./participants.entity";
 import { Achievement } from "src/achievement/entities/achievement.entity";
+import { Appeal } from "src/achievement/entities/appeal.entity";
 
 @Table
 export class Event extends Model {
@@ -32,7 +33,7 @@ export class Event extends Model {
     @BelongsTo(() => University, 'university_id')
     university: University;
 
-    @BelongsToMany(() => User, () => Participants)
+    @BelongsToMany(() => User, () => Appeal)
     participants: User[];
 
     @HasMany(()=>Achievement)
