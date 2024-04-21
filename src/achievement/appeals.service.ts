@@ -11,6 +11,7 @@ import { User } from 'src/user/entities/user.entity';
 import { University } from 'src/university/entities/university.entity';
 import { Group } from 'src/university/entities/group.entity';
 import sequelize from 'sequelize';
+import { Direction } from 'src/university/entities/direction.entity';
 
 @Injectable()
 export class AppealsService {
@@ -85,7 +86,7 @@ export class AppealsService {
     const appeal = await this.appealsRepository.findByPk(id, {
       include: [{
           model: User,
-          include: [{ model: Group }] // Загрузка данных факультета пользователя
+          include: [{ model: Group, include: [{model: Direction}] }] // Загрузка данных факультета пользователя
       }, {
           model: Event,
           include: [{ model: University }] // Загрузка данных факультета события
