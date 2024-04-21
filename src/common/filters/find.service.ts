@@ -55,7 +55,8 @@ export class FindService {
   buildInclude(includes: IncludeCriteriaDto[]): Includeable[] {
     return includes.map(include => ({
       association: include.association,
-      where: this.buildWhere(include.fields)
+      where: this.buildWhere(include.fields),
+      required: false 
     }));  
   }
 }
