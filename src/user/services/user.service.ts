@@ -19,6 +19,7 @@ import { Friends } from '../entities/friends.entity';
 import { University } from 'src/university/entities/university.entity';
 import { Achievement } from 'src/achievement/entities/achievement.entity';
 import { Event } from 'src/event/entities/event.entity';
+import { Organization } from 'src/vacancies/entities/organization.entity';
 
 @Injectable()
 export class UserService {
@@ -39,7 +40,7 @@ export class UserService {
   }
 
   async findOne(id): Promise<User> {
-    const user = await this.usersRepository.findOne({ where: { id }, include: [{ model: Role }, { model: Achievement, include: [{model: Event}] }, { model: Group, include: [{ model: Direction, include: [{ model: Department, include: [{ model: Faculty, include: [{model: University}] }] }] }] }, { model: Locality, include: [{ model: Region }] }] });
+    const user = await this.usersRepository.findOne({ where: { id }, include: [{ model: Role }, { model: Achievement, include: [{model: Event}] }, { model: Group, include: [{ model: Direction, include: [{ model: Department, include: [{ model: Faculty, include: [{model: University}] }] }] }] }, { model: Organization }, { model: Locality, include: [{ model: Region }] }] });
     return user;
   }
 
