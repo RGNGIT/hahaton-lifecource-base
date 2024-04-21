@@ -13,7 +13,7 @@ export class FindService {
     const {
       fields,
       page = 0,
-      pageSize = 10,
+      pageSize = 10000,
       sort = [],
       includes = [],
     } = queryParams;
