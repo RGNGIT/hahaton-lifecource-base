@@ -1,4 +1,4 @@
-import { Table, Column, Model, BelongsToMany, DataType, ForeignKey, BelongsTo, HasMany } from 'sequelize-typescript';
+import { Table, Column, Model, BelongsToMany, DataType, ForeignKey, BelongsTo, HasMany, HasOne } from 'sequelize-typescript';
 import { Role } from '../../role/entities/role.entity';
 import { UserRoles } from './user-roles.entity';
 import { Locality } from 'src/localities/entities/locality.entity';
@@ -14,6 +14,7 @@ import { Sex } from 'src/common/enums/sex.enum';
 import { Comment } from 'src/publication/entities/comments.entity';
 import { Invitation } from 'src/invitations/entities/invitation.entity';
 import { Friends } from './friends.entity';
+import { Organization } from 'src/vacancies/entities/organization.entity';
 
 @Table
 export class User extends Model {
@@ -83,6 +84,10 @@ export class User extends Model {
 
   @HasMany(() => Invitation, 'admin_id')
   adm_invites: Invitation[];
+
+
+  @HasOne(() => Organization, 'owner_id')
+  organization: Organization[];
 
   @Column({defaultValue: 0})
   rating: number;
