@@ -5,8 +5,5 @@ export class CreateCommentDto {
     text: string;
     @ApiProperty()
     publication_id: number;
-    @ApiProperty()
-    user_id: number;
-    @ApiPropertyOptional()
-    university_id: number;
+
 }

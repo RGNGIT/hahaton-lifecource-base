@@ -12,5 +12,7 @@ export class CreatePublicationDto {
     @ApiProperty()
     author_id: number;
     @ApiPropertyOptional()
+    university_id: number;
+    @ApiPropertyOptional()
     tags?: Array<string>;
 }
